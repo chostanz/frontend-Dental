@@ -1,10 +1,9 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { jwtDecode } from "jwt-decode";
 import apiClient from "../config/axiosConfig";
 import "../style/style.css";
 
-function Login() {
+function LoginDokter() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
@@ -22,8 +21,8 @@ function Login() {
     setErrorMsg("");
 
     try {
-      // FIX: Langsung tembak API Karyawan
-      const response = await apiClient.post("/login/karyawan", {
+      // FIX: Langsung tembak API Dokter
+      const response = await apiClient.post("/login", {
         email: email,
         password: password,
       });
@@ -33,9 +32,9 @@ function Login() {
       if (token) {
         localStorage.setItem("token", token);
         
-        // Karyawan pasti punya role (bos, cs, teknisi) di dalam tokennya
-        const decoded = jwtDecode(token);
-        localStorage.setItem("role", decoded.role);
+        // KARENA DOKTER TIDAK PUNYA FIELD ROLE, KITA HARDCODE SAJA DI SINI:
+        localStorage.setItem("role", "dokter");
+        localStorage.setItem('id_dokter', response.data.id_dokter); // Sesuai respons JSON login backend Anda
 
         navigate("/dashboard");
       } else {
@@ -58,26 +57,27 @@ function Login() {
         <div className="logo-section">
           <img src="/assets/Logo.png" alt="Logo Dental" />
           <h1>DENTAL</h1>
-          <h2>MANAGEMENT SYSTEM</h2>
-          <p>Silakan Masuk Untuk Melanjutkan Ke Sistem</p>
+          <h2>SISTEM KLINIK</h2>
+          <p>Portal Khusus Mitra Dokter</p>
         </div>
       </div>
 
       <div className="right-panel">
         <div className="login-box">
           <div className="avatar">
-            <i className="fa-regular fa-circle-user"></i>
+            {/* Pakai icon stetoskop atau bedakan warnanya jika mau */}
+            <i className="fa-solid fa-user-doctor" style={{color: '#0C96E4'}}></i>
           </div>
 
-          <h3>Masuk Sebagai Karyawan</h3>
+          <h3>Masuk Sebagai Dokter</h3>
 
           {errorMsg && <p style={{ color: "red", fontSize: "12px", textAlign: "center" }}>{errorMsg}</p>}
 
           <div className="form-group">
-            <label>Email</label>
+            <label>Email Dokter</label>
             <input
               type="email"
-              placeholder="Masukkan email..."
+              placeholder="dr.nama@gmail.com"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
@@ -93,12 +93,14 @@ function Login() {
             />
           </div>
 
-          <button className="btn" onClick={handleLogin} disabled={isLoading}>
-            {isLoading ? "Memproses..." : "Masuk"}
+          <button className="btn" onClick={handleLogin} disabled={isLoading} style={{background: '#0C96E4'}}>
+            {isLoading ? "Memproses..." : "Masuk Area Dokter"}
           </button>
 
           <div className="register-link">
-            Anda seorang Dokter? <Link to="/login-dokter" style={{color: 'blue'}}>Login di sini</Link>
+            Bukan Dokter? <Link to="/" style={{color: 'blue'}}>Login Karyawan</Link>
+            <br/><br/>
+            Belum punya akun? <Link to="/register">Register Dokter</Link>
           </div>
         </div>
       </div>
@@ -106,4 +108,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default LoginDokter;

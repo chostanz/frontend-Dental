@@ -1,0 +1,123 @@
+/* --- MODULAR STYLESHEET: DetailPesanan.css --- */
+
+.detail-page-wrapper {
+    padding: 20px 30px;
+    max-width: 1000px;
+    margin: 0 auto;
+    font-family: 'Poppins', sans-serif;
+}
+
+.detail-header-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.detail-title {
+    font-size: 22px;
+    font-weight: 700;
+    color: #001a8d;
+}
+
+.detail-status-badge {
+    padding: 6px 18px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.detail-card {
+    background: #ffffff;
+    border-radius: 15px;
+    padding: 25px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+    border: 1px solid #dde3ee;
+    margin-bottom: 25px;
+}
+
+.detail-card-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: #222;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #f0f4f8;
+}
+
+.info-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.info-item label {
+    display: block;
+    font-size: 12px;
+    color: #676060;
+    margin-bottom: 4px;
+    font-weight: 500;
+}
+
+.info-item p {
+    font-size: 14px;
+    color: #222;
+    font-weight: 600;
+}
+
+/* Tabel Detail Item */
+.detail-table-wrapper {
+    overflow-x: auto;
+}
+
+.detail-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.detail-table th {
+    background: #D7F0FF;
+    color: #001a8d;
+    padding: 12px 15px;
+    text-align: left;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.detail-table th:first-child { border-top-left-radius: 8px; border-bottom-left-radius: 8px; }
+.detail-table th:last-child { border-top-right-radius: 8px; border-bottom-right-radius: 8px; }
+
+.detail-table td {
+    padding: 15px;
+    border-bottom: 1px solid #f0f4f8;
+    color: #444;
+    font-size: 13px;
+}
+
+.detail-table tr:last-child td { border-bottom: none; }
+
+.detail-total-section {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 2px dashed #dde3ee;
+}
+
+.total-box {
+    text-align: right;
+}
+
+.total-box h4 {
+    font-size: 14px;
+    color: #676060;
+    font-weight: 500;
+    margin-bottom: 5px;
+}
+
+.total-box h2 {
+    font-size: 24px;
+    color: #3498db;
+    font-weight: 700;
+}

@@ -1,58 +1,140 @@
-import { Link } from "react-router-dom"; // 1. Import Link dari react-router-dom
-import "../style/Style.css";
+import { useState, useEffect } from "react";
+import apiClient from "../config/axiosConfig";
+import "../style/style.css";
+import "../style/Produksi.css";
 
 function Produksi() {
-  return (
-    <div className="dashboard-container">
+  const [pengerjaanList, setPengerjaanList] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [errorMsg, setErrorMsg] = useState("");
 
-      {/* SIDEBAR */}
-      <div className="sidebar">
+  // State modal update status
+  const [showModal, setShowModal] = useState(false);
+  const [selectedItem, setSelectedItem] = useState(null);
+  const [statusBaru, setStatusBaru] = useState("");
+  const [catatan, setCatatan] = useState("");
+  const [submitting, setSubmitting] = useState(false);
 
-        <div className="sidebar-logo">
-          <img src="/assets/Logo.png" alt="Logo" />
-          <div>
-            <p className="logo-title">DENTAL</p>
-            <p className="logo-sub">SYSTEM</p>
-          </div>
-        </div>
+  const fetchPengerjaan = async () => {
+    setLoading(true);
+    try {
+      const res = await apiClient.get("/api/produksi");
+      setPengerjaanList(res.data.data || []);
+    } catch (err) {
+      setErrorMsg(err.response?.data?.message || "Gagal mengambil data produksi");
+    } finally {
+      setLoading(false);
+    }
+  };
 
-        {/* 2. Mengubah semua tag <a> navigasi menjadi <Link> */}
-        <nav className="sidebar-nav">
+  useEffect(() => {
+    fetchPengerjaan();
+  }, []);
 
-          <Link to="/dashboard" className="nav-item">
-            Dashboard
-          </Link>
+  // Kelompokkan data berdasarkan status_produksi
+  const antrian = pengerjaanList.filter((p) => p.status_produksi === "antrian");
+  const dikerjakan = pengerjaanList.filter((p) => p.status_produksi === "dikerjakan");
+  const revisi = pengerjaanList.filter((p) => p.status_produksi === "revisi");
+  const selesai = pengerjaanList.filter((p) => p.status_produksi === "selesai");
 
-          <Link to="/pesanan" className="nav-item">
-            Pesanan
-          </Link>
+  // Urutan status sesuai SRS, dipakai untuk validasi tidak boleh mundur
+  const urutanStatus = { antrian: 1, dikerjakan: 2, revisi: 3, selesai: 4 };
 
-          <Link to="/persetujuan" className="nav-item">
-            Persetujuan
-          </Link>
+  // Pilihan status berikutnya tergantung status saat ini
+  const getOpsiStatus = (statusSaatIni) => {
+    switch (statusSaatIni) {
+      case "antrian":
+        return ["dikerjakan"];
+      case "dikerjakan":
+        return ["revisi", "selesai"];
+      case "revisi":
+        return ["dikerjakan", "selesai"];
+      default:
+        return [];
+    }
+  };
 
-          <Link to="/produksi" className="nav-item active">
-            Produksi
-          </Link>
+  const handleCardClick = (item) => {
+    // Card status "selesai" tidak bisa diklik lagi
+    if (item.status_produksi === "selesai") return;
 
-          <Link to="/pengiriman" className="nav-item">
-            Pengiriman
-          </Link>
+    setSelectedItem(item);
+    setStatusBaru("");
+    setCatatan("");
+    setShowModal(true);
+  };
 
-          <Link to="/transaksi" className="nav-item">
-            Transaksi
-          </Link>
+  const handleCloseModal = () => {
+    setShowModal(false);
+    setSelectedItem(null);
+    setStatusBaru("");
+    setCatatan("");
+  };
 
-        </nav>
+  const handleSimpan = async () => {
+    if (!statusBaru) {
+      alert("Pilih status baru terlebih dahulu");
+      return;
+    }
 
-        {/* Tombol keluar menggunakan <Link> */}
-        <Link to="/" className="btn-keluar">
-          Keluar
-        </Link>
+    // Sesuai SRS VR-14, catatan wajib kalau status revisi
+    if (statusBaru === "revisi" && catatan.trim() === "") {
+      alert("Catatan wajib diisi saat status revisi");
+      return;
+    }
 
+    setSubmitting(true);
+    try {
+      await apiClient.put(`/api/produksi/${selectedItem.id_pengerjaan}/status`, {
+        status_produksi: statusBaru,
+        catatan_karyawan: catatan
+      });
+
+      await fetchPengerjaan();
+      handleCloseModal();
+    } catch (err) {
+      alert(err.response?.data?.message || "Gagal mengupdate status produksi");
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+const renderCard = (item) => (
+    <div
+      className={`production-card ${item.status_produksi !== "selesai" ? "clickable" : ""}`}
+      key={item.id_pengerjaan}
+      onClick={() => handleCardClick(item)}
+    >
+      <h4>#{item.id_pesanan.slice(0, 8)}</h4>
+      <p className="card-produk">{item.nama_bahan || "Produk tidak diketahui"}</p>
+      <small className="card-dokter">drg. {item.nama_dokter}</small>
+
+      <div className="card-detail-teknis">
+        {item.kode_gigi && <span>Gigi: {item.kode_gigi}</span>}
+        {item.ukuran && <span>Ukuran: {item.ukuran} cm</span>}
+        {item.warna && <span>Warna: {item.warna}</span>}
+        {item.jumlah && <span>Jumlah: {item.jumlah}</span>}
       </div>
 
-      {/* MAIN CONTENT */}
+      {item.catatan_tambahan && (
+        <p className="card-catatan-dokter">
+          📝 {item.catatan_tambahan}
+        </p>
+      )}
+
+      {item.status_produksi === "revisi" && (
+        <span className="warning-btn">{item.catatan_karyawan}</span>
+      )}
+      {item.status_produksi === "selesai" && (
+        <span className="done-btn">Selesai</span>
+      )}
+    </div>
+);
+
+  if (loading) return <div className="dashboard-container"><div className="main-content">Loading...</div></div>;
+
+  return (
+    <div className="dashboard-container">
       <div className="main-content">
 
         <div className="topbar">
@@ -64,79 +146,73 @@ function Produksi() {
           </div>
         </div>
 
+        {errorMsg && <div style={{ color: "red", marginBottom: 10 }}>{errorMsg}</div>}
+
         <div className="production-grid">
 
-          {/* ANTRIAN */}
           <div className="production-column">
-            <h3>Antrian 3</h3>
-
-            <div className="production-card">
-              <h4>PSN-003</h4>
-              <p>Gigi Tiruan Full</p>
-              <small>drg. Dian W.</small>
-              <span>Natural</span>
-            </div>
-
-            <div className="production-card">
-              <h4>PSN-007</h4>
-              <p>Veneer Porselen</p>
-              <small>drg. Lina M.</small>
-            </div>
+            <h3>Antrian {antrian.length}</h3>
+            {antrian.map(renderCard)}
           </div>
 
-          {/* DIKERJAKAN */}
           <div className="production-column">
-            <h3>Dikerjakan 2</h3>
-
-            <div className="production-card">
-              <h4>PSN-001</h4>
-              <p>Crown Zirconia</p>
-              <small>Ahmad R</small>
-              <span>65%</span>
-            </div>
-
-            <div className="production-card">
-              <h4>PSN-005</h4>
-              <p>Bridge Porselen</p>
-              <small>Rina S</small>
-              <span>88%</span>
-            </div>
+            <h3>Dikerjakan {dikerjakan.length}</h3>
+            {dikerjakan.map(renderCard)}
           </div>
 
-          {/* REVISI */}
           <div className="production-column">
-            <h3>Revisi 1</h3>
-
-            <div className="production-card">
-              <h4>PSN-004</h4>
-              <p>Bridge Porselen</p>
-              <small>drg. Hendra S</small>
-              <button className="warning-btn">Warna tidak sesuai</button>
-            </div>
+            <h3>Revisi {revisi.length}</h3>
+            {revisi.map(renderCard)}
           </div>
 
-          {/* SELESAI */}
           <div className="production-column">
-            <h3>Selesai 2</h3>
-
-            <div className="production-card">
-              <h4>PSN-002</h4>
-              <p>Veneer Porselen</p>
-              <small>drg. Anita R.</small>
-              <button className="done-btn">Terkirim</button>
-            </div>
-
-            <div className="production-card">
-              <h4>PSN-008</h4>
-              <p>Crown Zirconia</p>
-              <small>drg. Tono P.</small>
-              <button className="done-btn">Terkirim</button>
-            </div>
+            <h3>Selesai {selesai.length}</h3>
+            {selesai.map(renderCard)}
           </div>
 
         </div>
 
       </div>
+
+      {/* MODAL UPDATE STATUS */}
+      {showModal && selectedItem && (
+        <div className="modal-overlay">
+          <div className="modal-box">
+            <h3>Update Status Pengerjaan</h3>
+            <p style={{ fontSize: 13, color: "#666", marginBottom: 12 }}>
+              Pesanan #{selectedItem.id_pesanan.slice(0, 8)} — status saat ini:{" "}
+              <strong>{selectedItem.status_produksi}</strong>
+            </p>
+
+            <select
+              className="modal-select"
+              value={statusBaru}
+              onChange={(e) => setStatusBaru(e.target.value)}
+            >
+              <option value="" disabled>-- Pilih status baru --</option>
+              {getOpsiStatus(selectedItem.status_produksi).map((opsi) => (
+                <option key={opsi} value={opsi}>{opsi}</option>
+              ))}
+            </select>
+
+            <textarea
+              className="modal-textarea"
+              placeholder={statusBaru === "revisi" ? "Catatan wajib diisi" : "Catatan (opsional)"}
+              value={catatan}
+              onChange={(e) => setCatatan(e.target.value)}
+            />
+
+            <div className="modal-actions">
+              <button className="btn-reject" onClick={handleCloseModal} disabled={submitting}>
+                Batal
+              </button>
+              <button className="btn-approve" onClick={handleSimpan} disabled={submitting}>
+                {submitting ? "Menyimpan..." : "Simpan"}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
     </div>
   );

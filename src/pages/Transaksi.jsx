@@ -5,53 +5,6 @@ function Transaksi() {
   return (
     <div className="dashboard-container">
 
-      <div className="sidebar">
-
-        <div className="sidebar-logo">
-          <img src="/assets/Logo.png" alt="Logo" />
-
-          <div>
-            <p className="logo-title">DENTAL</p>
-            <p className="logo-sub">SYSTEM</p>
-          </div>
-        </div>
-
-        {/* 2. Mengubah semua tag <a> navigasi menjadi <Link> */}
-        <nav className="sidebar-nav">
-
-          <Link to="/dashboard" className="nav-item">
-            Dashboard
-          </Link>
-
-          <Link to="/pesanan" className="nav-item">
-            Pesanan
-          </Link>
-
-          <Link to="/persetujuan" className="nav-item">
-            Persetujuan
-          </Link>
-
-          <Link to="/produksi" className="nav-item">
-            Produksi
-          </Link>
-
-          <Link to="/pengiriman" className="nav-item">
-            Pengiriman
-          </Link>
-
-          <Link to="/transaksi" className="nav-item active">
-            Transaksi
-          </Link>
-
-        </nav>
-
-        {/* Tombol keluar juga diubah menjadi <Link> */}
-        <Link to="/" className="btn-keluar">
-          Keluar
-        </Link>
-
-      </div>
-
       <div className="main-content">
 
         <div className="topbar">

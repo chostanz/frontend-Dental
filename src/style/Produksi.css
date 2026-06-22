@@ -1,0 +1,36 @@
+.production-card.clickable {
+  cursor: pointer;
+}
+
+.card-produk {
+  font-weight: bold;
+  margin: 4px 0;
+}
+
+.card-dokter {
+  color: #555;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.card-detail-teknis {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  font-size: 11px;
+  color: #444;
+  margin-bottom: 6px;
+}
+
+.card-detail-teknis span {
+  background: #f0f0f0;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.card-catatan-dokter {
+  font-size: 11px;
+  color: #888;
+  font-style: italic;
+  margin-top: 4px;
+}

@@ -9,6 +9,48 @@ body{
     background:#f5f5f5;
 }
 
+
+/* aku ubah */
+/* 1. Perbaikan elemen input dan select agar teks terbaca jelas (Hitam) */
+.input-group input,
+.input-group textarea,
+.input-group select,
+.filter-search input,
+.filter-select select {
+    color: #222222 !important; /* Memaksa warna teks menjadi hitam legam */
+    background: #ffffff !important; /* Background putih bersih agar kontras */
+    border: 1px solid #cccccc;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Memperbaiki warna teks dropdown/select pada form */
+.input-group select option {
+    color: #222222;
+    background: #ffffff;
+}
+
+/* 2. Menghilangkan garis bawah / underline pada tombol, link, dan aksi tabel */
+a, 
+.aksi-link,
+.shipping-table a,
+.btn-approve,
+.btn-reject {
+    text-decoration: none !important; /* Menghilangkan garis bawah secara mutlak */
+}
+
+/* 3. Perbaikan kontras teks pada form register / input agar tidak bias */
+.register-box h3,
+.register-box label,
+.input-group label {
+    color: #222222 !important;
+}
+
+/* 4. Menyesuaikan warna placeholder agar terlihat jelas */
+::placeholder {
+    color: #999999;
+    opacity: 1;
+}
+
 /* ========= LOGIN ========== */
 
 .login-container{
