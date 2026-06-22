@@ -14,7 +14,9 @@ import Karyawan from "./pages/Karyawan";
 import LoginDokter from "./pages/LoginDokter";
 import BuatPesanan from "./pages/BuatPesanan";
 import DetailPesanan from "./pages/DetailPesanan";
-import Layout from "./components/Layout"; // Import Layout yang baru dibuat
+import DetailPengiriman from "./pages/DetailPengiriman";
+import Profil from "./pages/Profil";
+import Layout from "./components/Layout"; 
 
 function App() {
   return (
@@ -39,6 +41,8 @@ function App() {
           <Route path="/karyawan" element={<Karyawan />} />
           <Route path="/buat-pesanan" element={<BuatPesanan />} />
           <Route path="/pesanan/detail/:id" element={<DetailPesanan />} />
+          <Route path="/pengiriman/:id/detail" element={<DetailPengiriman/>} />
+          <Route path="/profil" element={<Profil/>} />
         </Route>
       </Routes>
     </BrowserRouter>

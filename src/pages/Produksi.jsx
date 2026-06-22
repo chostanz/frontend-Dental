@@ -108,6 +108,14 @@ const renderCard = (item) => (
       <h4>#{item.id_pesanan.slice(0, 8)}</h4>
       <p className="card-produk">{item.nama_bahan || "Produk tidak diketahui"}</p>
       <small className="card-dokter">drg. {item.nama_dokter}</small>
+      
+      {/* --- TAMBAHAN: Menampilkan nama karyawan / teknisi yang memegang task ini --- */}
+      {item.nama_karyawan && (
+        <p className="card-karyawan" style={{ fontSize: '11px', color: '#001a8d', fontWeight: '500', marginTop: '2px' }}>
+          🛠 Dikerjakan oleh: {item.nama}
+        </p>
+      )}
+      {/* ---------------------------------------------------------------------- */}
 
       <div className="card-detail-teknis">
         {item.kode_gigi && <span>Gigi: {item.kode_gigi}</span>}

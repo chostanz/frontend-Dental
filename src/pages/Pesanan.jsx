@@ -83,7 +83,7 @@ function Pesanan() {
 
         <div className="topbar">
           <div className="topbar-left">
-            <h2>Pesanan Saya</h2>
+            <h2>Pesanan</h2>
           </div>
           {isUserDokter && (
             <div className="topbar-right">

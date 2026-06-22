@@ -32,8 +32,8 @@ const Sidebar = () => {
         {/* Akses KHUSUS TEKNISI */}
         {role === 'teknisi' && (
           <>
+            <Link to="/produk" className={isActive('/produk')}>Produk</Link>
             <Link to="/pesanan" className={isActive('/pesanan')}>Pesanan</Link>
-            <Link to="/persetujuan" className={isActive('/persetujuan')}>Persetujuan</Link>
             <Link to="/produksi" className={isActive('/produksi')}>Produksi</Link>
           </>
         )}
