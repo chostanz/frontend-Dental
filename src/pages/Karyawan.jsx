@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import apiClient from '../config/axiosConfig';
+import Topbar from '../components/Topbar';
 import "../style/style.css";
 import "../style/Karyawan.css"; 
 
@@ -69,11 +71,11 @@ function ModalTambah({ onClose, onSuccess }) {
 
   return (
     <div className="modal-overlay">
-      <div className="modal-box" style={{ maxWidth: '400px' }}>
+      <div className="modal-box" style={{ maxWidth: '400px', background: '#D7F0FF'}}>
         <h3>Tambah Karyawan</h3>
         <div style={{ marginTop: '15px' }}>
           {error && (
-            <p style={{ color: '#dc2626', fontSize: 12, marginBottom: 12, background: '#fee2e2', padding: '8px', borderRadius: '6px' }}>{error}</p>
+            <p style={{ color: '#dc2626', fontSize: 12, marginBottom: 12, background: '#ffffff', padding: '8px', borderRadius: '6px' }}>{error}</p>
           )}
           {[
             { label: 'Nama Lengkap', key: 'nama', type: 'text', placeholder: 'Contoh: Budi Santoso' },
@@ -91,7 +93,7 @@ function ModalTambah({ onClose, onSuccess }) {
               />
             </div>
           ))}
-          <div className="form-group" style={{ textAlign: 'left', marginBottom: '12px' }}>
+          <div className="form-group" style={{ textAlign: 'left', marginBottom: '12px', color:'black'}}>
             <label style={{ fontWeight: 600, fontSize: 13, display: 'block', marginBottom: '4px' }}>Role</label>
             <select 
               value={form.role} 
@@ -115,7 +117,6 @@ function ModalTambah({ onClose, onSuccess }) {
   );
 }
 
-/* ─── Modal Edit Karyawan ────────────────────────────────── */
 function ModalEdit({ karyawan, onClose, onSuccess }) {
   const [form, setForm] = useState({
     nama: karyawan.nama || '',
@@ -168,7 +169,7 @@ function ModalEdit({ karyawan, onClose, onSuccess }) {
             <select 
               value={form.role} 
               onChange={e => setForm({ ...form, role: e.target.value })}
-              style={{ width: '100%', padding: '10px 12px', border: '1px solid #cbd5e1', borderRadius: '8px', outline: 'none', background: 'white' }}
+              style={{ width: '100%', padding: '10px 12px', border: '1px solid #cbd5e1', color:'black', borderRadius: '8px', outline: 'none', background: 'white' }}
             >
               <option value="cs">CS</option>
               <option value="teknisi">Teknisi</option>
@@ -187,7 +188,6 @@ function ModalEdit({ karyawan, onClose, onSuccess }) {
   );
 }
 
-/* ─── Modal Konfirmasi Reset Password ────────────────────── */
 function ModalResetPassword({ karyawan, onClose, onSuccess }) {
   const [loading, setLoading] = useState(false);
   const [newPass, setNewPass] = useState('');
@@ -248,7 +248,6 @@ function ModalResetPassword({ karyawan, onClose, onSuccess }) {
   );
 }
 
-/* ─── Modal Konfirmasi Hapus ─────────────────────────────── */
 function ModalHapus({ karyawan, onClose, onSuccess }) {
   const [loading, setLoading] = useState(false);
 
@@ -285,8 +284,8 @@ function ModalHapus({ karyawan, onClose, onSuccess }) {
   );
 }
 
-/* ─── Halaman Utama Karyawan ─────────────────────────────── */
 function Karyawan() {
+  const navigate = useNavigate();
   const [karyawanList, setKaryawanList] = useState([]);
   const [filtered, setFiltered] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -338,31 +337,18 @@ function Karyawan() {
     <div className="dashboard-container">
       <div className="main-content">
         
-        {/* Topbar Bersih Tanpa Sidebar Ganda */}
-        <div className="topbar">
-          <div className="topbar-left">
-            <h2>Manajemen Karyawan</h2>
-          </div>
-          <div className="topbar-right">
-            <button
-              className="btn"
-              style={{ width: 'auto', padding: '10px 20px', textDecoration: 'none' }}
-              onClick={() => setModalTambah(true)}
-            >
-              + Tambah Karyawan
-            </button>
-          </div>
-        </div>
+        <Topbar title="Manajemen Karyawan" />
 
-        {/* Filter Bar Model Kotak Card Mockup */}
-        <div className="filter-bar" style={{display: 'flex', gap: '14px', marginBottom: '20px'}}>
-          <div className="filter-search" style={{background: 'white', padding: '10px 18px', borderRadius: '12px', boxShadow: '0 2px 8px rgba(0,0,0,0.06)', flex: 1}}>
+        {/* Filter & Button Container (Sejajar Sempurna) */}
+        <div className="filter-bar" style={{ display: 'flex', gap: '14px', marginBottom: '20px', alignItems: 'center' }}>
+          
+          <div className="filter-search" style={{ background: 'white', padding: '0 18px', borderRadius: '12px', boxShadow: '0 2px 8px rgba(0,0,0,0.06)', flex: 1, display: 'flex', alignItems: 'center', height: '46px' }}>
             <input
               type="text"
               placeholder="Cari nama, email, atau nomor HP..."
               value={search}
               onChange={e => setSearch(e.target.value)}
-              style={{border: 'none', outline: 'none', fontFamily: 'Poppins', fontSize: '13px', width: '100%'}}
+              style={{ border: 'none', outline: 'none', fontFamily: 'Poppins', fontSize: '13px', width: '100%', background: 'transparent', color: '#222' }}
             />
           </div>
 
@@ -370,7 +356,7 @@ function Karyawan() {
             <select 
               value={filterRole} 
               onChange={e => setFilterRole(e.target.value)}
-              style={{padding: '12px 36px 12px 18px', borderRadius: '12px', border: 'none', boxShadow: '0 2px 8px rgba(0,0,0,0.06)', outline: 'none', fontFamily: 'Poppins', fontSize: '13px', background: 'white'}}
+              style={{ padding: '0 36px 0 18px', borderRadius: '12px', border: 'none', boxShadow: '0 2px 8px rgba(0,0,0,0.06)', outline: 'none', fontFamily: 'Poppins', fontSize: '13px', color: '#222', background: 'white', height: '46px', cursor: 'pointer' }}
             >
               <option value="semua">Semua Role</option>
               <option value="cs">CS</option>
@@ -378,6 +364,25 @@ function Karyawan() {
               <option value="bos">Bos</option>
             </select>
           </div>
+
+          {/* Tombol Tambah Karyawan Yang Ditunggu-tunggu */}
+         <button
+            className="btn-tambah"
+            style={{ 
+              padding: '12px 20px', 
+              background: '#001a8d', 
+              color: 'white', 
+              border: 'none', 
+              borderRadius: '10px', 
+              cursor: 'pointer', 
+              fontWeight: '600', 
+              whiteSpace: 'nowrap' 
+            }}
+            onClick={() => setModalTambah(true)}
+          >
+            + Tambah Karyawan
+          </button>
+
         </div>
 
         {/* Table Card (Tabel Rapi Disesuaikan Global CSS Lab) */}

@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import apiClient from "../config/axiosConfig";
 import "../style/style.css";
 import "../style/Produksi.css";
+import Topbar from "../components/Topbar";
 
 function Produksi() {
   const [pengerjaanList, setPengerjaanList] = useState([]);
@@ -14,6 +15,17 @@ function Produksi() {
   const [statusBaru, setStatusBaru] = useState("");
   const [catatan, setCatatan] = useState("");
   const [submitting, setSubmitting] = useState(false);
+
+  const token = localStorage.getItem("token");
+  let idKaryawanAktif = "";
+  if (token) {
+    try {
+      const decoded = jwtDecode(token);
+      idKaryawanAktif = decoded.id_karyawan || decoded.id || "";
+    } catch (e) {
+      console.error("Gagal decode token:", e);
+    }
+  }
 
   const fetchPengerjaan = async () => {
     setLoading(true);
@@ -70,14 +82,12 @@ function Produksi() {
     setStatusBaru("");
     setCatatan("");
   };
-
-  const handleSimpan = async () => {
+const handleSimpan = async () => {
     if (!statusBaru) {
       alert("Pilih status baru terlebih dahulu");
       return;
     }
 
-    // Sesuai SRS VR-14, catatan wajib kalau status revisi
     if (statusBaru === "revisi" && catatan.trim() === "") {
       alert("Catatan wajib diisi saat status revisi");
       return;
@@ -85,7 +95,9 @@ function Produksi() {
 
     setSubmitting(true);
     try {
+      // 🌟 FIX: Sertakan id_karyawan teknisi yang update status
       await apiClient.put(`/api/produksi/${selectedItem.id_pengerjaan}/status`, {
+        id_karyawan: idKaryawanAktif, 
         status_produksi: statusBaru,
         catatan_karyawan: catatan
       });
@@ -98,61 +110,71 @@ function Produksi() {
       setSubmitting(false);
     }
   };
-
+  
 const renderCard = (item) => (
     <div
       className={`production-card ${item.status_produksi !== "selesai" ? "clickable" : ""}`}
       key={item.id_pengerjaan}
       onClick={() => handleCardClick(item)}
     >
-      <h4>#{item.id_pesanan.slice(0, 8)}</h4>
+      <h4>#{item.id_pesanan.slice(0, 8).toUpperCase()}</h4>
       <p className="card-produk">{item.nama_bahan || "Produk tidak diketahui"}</p>
       <small className="card-dokter">drg. {item.nama_dokter}</small>
       
-      {/* --- TAMBAHAN: Menampilkan nama karyawan / teknisi yang memegang task ini --- */}
-      {item.nama_karyawan && (
-        <p className="card-karyawan" style={{ fontSize: '11px', color: '#001a8d', fontWeight: '500', marginTop: '2px' }}>
+      {item.nama && (
+        <p className="card-karyawan" style={{ fontSize: '11px', color: '#001a8d', fontWeight: '600', marginTop: '2px' }}>
           🛠 Dikerjakan oleh: {item.nama}
         </p>
       )}
-      {/* ---------------------------------------------------------------------- */}
 
       <div className="card-detail-teknis">
         {item.kode_gigi && <span>Gigi: {item.kode_gigi}</span>}
-        {item.ukuran && <span>Ukuran: {item.ukuran} cm</span>}
+        {item.ukuran && <span>Ukuran: {item.ukuran}</span>}
         {item.warna && <span>Warna: {item.warna}</span>}
         {item.jumlah && <span>Jumlah: {item.jumlah}</span>}
       </div>
 
       {item.catatan_tambahan && (
-        <p className="card-catatan-dokter">
-          📝 {item.catatan_tambahan}
+        <p className="card-catatan-dokter" style={{ fontSize: '11px', marginTop: '6px' }}>
+          📝 Pesanan: {item.catatan_tambahan}
         </p>
       )}
 
-      {item.status_produksi === "revisi" && (
-        <span className="warning-btn">{item.catatan_karyawan}</span>
+      {/* 🌟 TAMPILAN CATATAN KELUHAN REVISI DARI DOKTER */}
+      {item.status_produksi === "revisi" && item.deskripsi_revisi && (
+        <div style={{ background: '#fee2e2', color: '#991b1b', padding: '10px', borderRadius: '8px', fontSize: '11px', marginTop: '10px', border: '1px solid #fca5a5' }}>
+          <strong style={{ display: 'block', marginBottom: '3px' }}>⚠ Keluhan Revisi:</strong>
+          {item.deskripsi_revisi}
+        </div>
       )}
-      {item.status_produksi === "selesai" && (
-        <span className="done-btn">Selesai</span>
+
+      {/* 🌟 TAMPILAN CATATAN KARYAWAN (TEKNISI) DI PALING BAWAH */}
+      {item.catatan_karyawan && (
+        <div style={{ marginTop: '12px', paddingTop: '10px', borderTop: '1px dashed #cbd5e1', fontSize: '11px', color: '#475569' }}>
+          <strong style={{ display: 'block', marginBottom: '3px', color: '#334155' }}>Catatan Teknisi:</strong>
+          {item.catatan_karyawan}
+        </div>
       )}
+
+      {/* Badge Status */}
+      <div style={{ marginTop: '12px' }}>
+        {item.status_produksi === "revisi" && (
+          <span className="warning-btn" style={{ fontWeight: 'bold' }}>Sedang Direvisi</span>
+        )}
+        {item.status_produksi === "selesai" && (
+          <span className="done-btn" style={{ fontWeight: 'bold' }}>Selesai</span>
+        )}
+      </div>
     </div>
-);
+  );
 
   if (loading) return <div className="dashboard-container"><div className="main-content">Loading...</div></div>;
 
   return (
     <div className="dashboard-container">
       <div className="main-content">
+        <Topbar title="Produksi" />
 
-        <div className="topbar">
-          <div className="topbar-left">
-            <h2>Proses Produksi</h2>
-          </div>
-          <div className="topbar-right">
-            <span>admin@gmail.com</span>
-          </div>
-        </div>
 
         {errorMsg && <div style={{ color: "red", marginBottom: 10 }}>{errorMsg}</div>}
 

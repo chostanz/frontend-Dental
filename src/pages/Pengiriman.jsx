@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import apiClient from "../config/axiosConfig";
 import { jwtDecode } from "jwt-decode";
 import "../style/pengiriman.css";
-
+import Topbar from "../components/Topbar";
 const API_BASE = "http://localhost:8080";
 
 function Pengiriman() {
@@ -133,15 +133,7 @@ function Pengiriman() {
     <div className="dashboard-container">
       <div className="main-content">
 
-        <div className="topbar">
-          <div className="topbar-left">
-            <h2>Pengiriman</h2>
-          </div>
-          <div className="topbar-right">
-            <span>{localStorage.getItem("email") || "admin@gmail.com"}</span>
-          </div>
-        </div>
-
+        <Topbar title="Pengiriman" />
         <div className="shipping-top">
           <input
             className="shipping-search"

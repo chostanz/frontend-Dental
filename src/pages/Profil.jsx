@@ -118,7 +118,7 @@ useEffect(() => {
 
         {/* KONTEN UTAMA (CENTER CARD) */}
         <div style={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
-          <div style={{ background: 'white', padding: '40px', borderRadius: '20px', boxShadow: '0 4px 15px rgba(0,0,0,0.05)', width: '100%', maxWidth: '500px' }}>
+          <div style={{ background: '#D7F0FF', padding: '40px', borderRadius: '20px', boxShadow: '0 4px 15px rgba(0,0,0,0.05)', width: '100%', maxWidth: '500px' }}>
             
             {/* INPUT EMAIL (READONLY) */}
             <div style={{ marginBottom: '15px' }}>
@@ -138,18 +138,18 @@ useEffect(() => {
                 type="text" 
                 value={formData.nama} 
                 onChange={(e) => setFormData({...formData, nama: e.target.value})}
-                style={{ width: '100%', padding: '12px', borderRadius: '10px', border: '1px solid #ddd' }}
+                style={{ width: '100%', padding: '12px', borderRadius: '10px', border: '1px solid #ddd', color:'#666', background:'white'}}
               />
             </div>
 
             {/* INPUT NO HP */}
-            <div style={{ marginBottom: '25px' }}>
-              <label style={{ display: 'block', marginBottom: '5px', fontSize: '13px', fontWeight: '600', color: '#666' }}>No Hp</label>
+            <div style={{ marginBottom: '25px'}}>
+              <label style={{ display: 'block', marginBottom: '5px', fontSize: '13px', fontWeight: '600', color:'#666' }}>No Hp</label>
               <input 
                 type="text" 
                 value={formData.no_hp} 
                 onChange={(e) => setFormData({...formData, no_hp: e.target.value})}
-                style={{ width: '100%', padding: '12px', borderRadius: '10px', border: '1px solid #ddd' }}
+                style={{ width: '100%', padding: '12px', borderRadius: '10px', border: '1px solid #ddd', color:'#666', background:'white' }}
               />
             </div>
 
@@ -176,7 +176,7 @@ useEffect(() => {
       {/* MODAL GANTI PASSWORD (POPUP) */}
       {showModal && (
         <div className="modal-overlay">
-          <div className="modal-box" style={{ maxWidth: '400px' }}>
+          <div className="modal-box" style={{ maxWidth: '400px', background:'#D7F0FF'}}>
             <h3 style={{ textAlign: 'center', marginBottom: '20px' }}>Ganti Password</h3>
             
             <div style={{ marginBottom: '12px' }}>
@@ -185,6 +185,7 @@ useEffect(() => {
                 placeholder="Password Lama"
                 className="modal-select" 
                 value={passData.old_password}
+                style={{ width: '100%', padding: '12px', borderRadius: '10px', border: '1px solid #ddd', color:'#666', background:'white' }}
                 onChange={(e) => setPassData({...passData, old_password: e.target.value})}
               />
             </div>
@@ -195,6 +196,7 @@ useEffect(() => {
                 placeholder="Password Baru"
                 className="modal-select" 
                 value={passData.new_password}
+                 style={{ width: '100%', padding: '12px', borderRadius: '10px', border: '1px solid #ddd', color:'#666', background:'white' }}
                 onChange={(e) => setPassData({...passData, new_password: e.target.value})}
               />
             </div>
@@ -205,6 +207,7 @@ useEffect(() => {
                 placeholder="Konfirmasi Password Baru"
                 className="modal-select" 
                 value={passData.confirm_password}
+                 style={{ width: '100%', padding: '12px', borderRadius: '10px', border: '1px solid #ddd', color:'#666', background:'white' }}
                 onChange={(e) => setPassData({...passData, confirm_password: e.target.value})}
               />
             </div>

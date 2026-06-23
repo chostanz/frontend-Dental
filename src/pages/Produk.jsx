@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import apiClient from '../config/axiosConfig';
 import "../style/style.css";
+import Topbar from '../components/Topbar';
 
 const KatalogProduk = () => {
   const [produk, setProduk] = useState([]);
@@ -79,10 +80,7 @@ const KatalogProduk = () => {
     <div className="dashboard-container">
       <div className="main-content">
         
-        <div className="topbar">
-          <div className="topbar-left">
-            <h2>{isAdmin ? 'Manajemen Produk' : 'Katalog Produk Lab'}</h2>
-          </div>
+          <Topbar title="Produk" />
           {isAdmin && !showForm && (
             <div className="topbar-right">
               <button className="btn" onClick={() => { setShowForm(true); setIsEditing(false); setFormData({ id_produk: '', nama_bahan: '', spesifikasi: '', harga: '' }); }} style={{ width: 'auto', padding: '10px 20px', background: '#3498db' }}>
@@ -90,7 +88,6 @@ const KatalogProduk = () => {
               </button>
             </div>
           )}
-        </div>
 
         {/* Form Input Sesuai Style Register Box */}
         {showForm && isAdmin && (

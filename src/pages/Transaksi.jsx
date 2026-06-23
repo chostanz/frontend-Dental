@@ -4,6 +4,7 @@ import { jwtDecode } from "jwt-decode";
 import apiClient from "../config/axiosConfig"; 
 import "../style/style.css";
 import "../style/Produksi.css"; 
+import Topbar from "../components/Topbar";
 
 function Transaksi() {
   const navigate = useNavigate();
@@ -147,24 +148,9 @@ function Transaksi() {
     <div className="dashboard-container">
       <div className="main-content">
         
-        {/* TOPBAR - Rapi, Menampilkan Role dan Email */}
-        <div className="topbar">
-          <div className="topbar-left">
-            <h2>Transaksi & Pembayaran</h2>
-          </div>
-          <div className="topbar-right">
-            <span style={{fontWeight: '600', color: '#001a8d', textTransform: 'uppercase', fontSize: '14px'}}>Hallo, {role}</span>
-            <span style={{fontSize: '12px', color: '#676060', marginLeft: '6px'}}>{displayEmail}</span>
-            <i 
-              className="fa-regular fa-circle-user admin-avatar" 
-              style={{marginLeft: '10px', fontSize: '24px', cursor: 'pointer'}}
-              onClick={() => navigate("/profil")}
-              title="Ke Halaman Profil"
-            ></i>
-          </div>
-        </div>
+        <Topbar title="Transaksi" />
 
-        {/* Filter & Tombol Export */}
+
         <div className="transaksi-filter" style={{display: 'flex', gap: '15px', marginBottom: '20px', alignItems: 'center'}}>
           <input
             type="text"
@@ -178,7 +164,6 @@ function Transaksi() {
             <option>Belum Bayar</option>
           </select>
           
-          {/* 🌟 TOMBOL EXPORT CSV / EXCEL */}
           <button 
             className="btn" 
             onClick={handleExportCSV}
@@ -188,7 +173,6 @@ function Transaksi() {
           </button>
         </div>
 
-        {/* Tabel Data Transaksi */}
         <div className="table-card" style={{background: 'white', padding: '20px', borderRadius: '12px', boxShadow: '0 4px 10px rgba(0,0,0,0.05)'}}>
           {loading ? (
             <p style={{ textAlign: "center", padding: "20px" }}>Memuat transaksi...</p>
@@ -260,7 +244,6 @@ function Transaksi() {
         </div>
       </div>
 
-      {/* MODAL KONFIRMASI PEMBAYARAN */}
       {showModal && selectedTrx && (
         <div className="modal-overlay">
           <div className="modal-box" style={{background: 'white', padding: '30px', borderRadius: '16px', boxShadow: '0 10px 25px rgba(0,0,0,0.05)', border: '1px solid #e2e8f0', maxWidth: '400px'}}>

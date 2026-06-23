@@ -4,6 +4,7 @@ import { jwtDecode } from "jwt-decode";
 import apiClient from '../config/axiosConfig';
 import "../style/style.css";
 import "../style/Produksi.css"; 
+import Topbar from '../components/Topbar';
 
 // === 1. STATISTIK KEUANGAN & JUMLAH (Khusus CS & Bos) ===
 const BosCsStats = () => {
@@ -42,7 +43,7 @@ const BosCsStats = () => {
       </div>
       <div className="stat-card">
         <div className="stat-label">Total Pendapatan</div>
-        <div className="stat-number" style={{ fontSize: '24px' }}>
+        <div className="stat-number" style={{ fontSize: '20px' }}>
           Rp {stats?.total_pendapatan?.toLocaleString('id-ID') || 0}
         </div>
       </div>
@@ -200,23 +201,8 @@ const Dashboard = () => {
     <div className="dashboard-container">
       <div className="main-content">
 
-        {/* TOPBAR - Dinamis, Menampilkan nama dan email aktif */}
-        <div className="topbar">
-          <div className="topbar-left">
-            <h2>Dashboard</h2>
-          </div>
-          <div className="topbar-right">
-            <span style={{marginRight: '8px'}}>Halo, <b>{profil.nama}</b></span> 
-            <span style={{fontSize: '13px', color: '#676060'}}>{profil.email}</span>
-            {/* Mengarahkan ke halaman profil saat ikon diklik */}
-            <i 
-              className="fa-regular fa-circle-user admin-avatar" 
-              style={{marginLeft: '12px', fontSize: '24px', cursor: 'pointer', color: '#001a8d'}}
-              title="Ke Halaman Profil & Ganti Password"
-              onClick={() => navigate("/profil")}
-            ></i>
-          </div>
-        </div>
+       
+      <Topbar title="Dashboard" />
 
         {/* TAMPILAN STATISTIK KEUANGAN (Hanya untuk CS & Bos) */}
         {(role === 'bos' || role === 'cs') && <BosCsStats />}
