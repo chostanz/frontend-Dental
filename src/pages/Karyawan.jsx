@@ -370,7 +370,7 @@ function Karyawan() {
             className="btn-tambah"
             style={{ 
               padding: '12px 20px', 
-              background: '#001a8d', 
+              background: '#3498db', 
               color: 'white', 
               border: 'none', 
               borderRadius: '10px', 
