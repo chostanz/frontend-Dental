@@ -24,16 +24,18 @@ function Login() {
     try {
       // FIX: Langsung tembak API Karyawan
       const response = await apiClient.post("/login/karyawan", {
-        email: email,
-        password: password,
+        email,
+        password,
       });
 
-      const token = response.data.token || (response.data.data && response.data.data.token);
+      const token =
+        response.data.token ||
+        (response.data.data && response.data.data.token);
 
       if (token) {
         localStorage.setItem("token", token);
-        
-        // Karyawan pasti punya role (bos, cs, teknisi) di dalam tokennya
+
+        // Karyawan pasti punya role (bos, cs, teknisi)
         const decoded = jwtDecode(token);
         localStorage.setItem("role", decoded.role);
 
@@ -65,41 +67,108 @@ function Login() {
 
       <div className="right-panel">
         <div className="login-box">
-          <div className="avatar">
-            <i className="fa-regular fa-circle-user"></i>
+
+        
+          <div
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              justifyContent: "center",
+              background: "#e0f2fe",
+              width: "64px",
+              height: "64px",
+              borderRadius: "50%",
+              marginBottom: "16px",
+            }}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="34"
+              height="34"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="#2563eb"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+              <circle cx="12" cy="7" r="4" />
+            </svg>
           </div>
 
           <h3>Masuk Sebagai Karyawan</h3>
 
-          {errorMsg && <p style={{ color: "red", fontSize: "12px", textAlign: "center" }}>{errorMsg}</p>}
+          {errorMsg && (
+            <p
+              style={{
+                color: "red",
+                fontSize: "12px",
+                textAlign: "center",
+              }}
+            >
+              {errorMsg}
+            </p>
+          )}
 
-          <div className="form-group">
-            <label>Email</label>
+          {/* Email */}
+          <div className="form-group" style={{ textAlign: "left" }}>
+            <label
+              style={{
+                display: "block",
+                textAlign: "left",
+                width: "100%",
+              }}
+            >
+              Email
+            </label>
+
             <input
               type="email"
               placeholder="Masukkan email..."
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              style={{
+                boxSizing: "border-box",
+                width: "100%",
+              }}
             />
           </div>
 
-          <div className="form-group">
-            <label>Password</label>
+          {/* Password */}
+          <div className="form-group" style={{ textAlign: "left" }}>
+            <label
+              style={{
+                display: "block",
+                textAlign: "left",
+                width: "100%",
+              }}
+            >
+              Password
+            </label>
+
             <input
               type="password"
               placeholder="••••••••"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              style={{
+                boxSizing: "border-box",
+                width: "100%",
+              }}
             />
           </div>
 
-          <button className="btn" onClick={handleLogin} disabled={isLoading}>
+          <button
+            className="btn"
+            onClick={handleLogin}
+            disabled={isLoading}
+          >
             {isLoading ? "Memproses..." : "Masuk"}
           </button>
-{/* 
-          <div className="register-link">
-            Anda seorang Dokter? <Link to="/login-dokter" style={{color: 'blue'}}>Login di sini</Link>
-          </div> */}
+
+        
+
         </div>
       </div>
     </div>

@@ -74,7 +74,7 @@ function Produksi() {
       return;
     }
 
-    // 🌟 Diperketat: Jika status revisi, pastikan catatan teknisi tidak kosong
+   
     if (statusBaru === "revisi" && catatan.trim() === "") {
       alert("Catatan wajib diisi saat status revisi");
       return;
@@ -82,11 +82,11 @@ function Produksi() {
 
     setSubmitting(true);
     try {
-      // 🌟 Payload disesuaikan dengan standar struktur database & backend Golang 
+
       await apiClient.put(`/api/produksi/${selectedItem.id_pengerjaan}/status`, {
         id_karyawan: idKaryawanAktif, 
         status_produksi: statusBaru,
-        catatan_karyawan: catatan || "-" // Diberi fallback "-" agar backend tidak error null
+        catatan_karyawan: catatan || "-" 
       });
 
       await fetchPengerjaan();
@@ -99,7 +99,6 @@ function Produksi() {
   };
 
   const handleCardClick = (item) => {
-    // Card status "selesai" tidak bisa diklik lagi
     if (item.status_produksi === "selesai") return;
 
     setSelectedItem(item);
@@ -114,35 +113,7 @@ function Produksi() {
     setStatusBaru("");
     setCatatan("");
   };
-// const handleSimpan = async () => {
-//     if (!statusBaru) {
-//       alert("Pilih status baru terlebih dahulu");
-//       return;
-//     }
 
-//     if (statusBaru === "revisi" && catatan.trim() === "") {
-//       alert("Catatan wajib diisi saat status revisi");
-//       return;
-//     }
-
-//     setSubmitting(true);
-//     try {
-//       // 🌟 FIX: Sertakan id_karyawan teknisi yang update status
-//       await apiClient.put(`/api/produksi/${selectedItem.id_pengerjaan}/status`, {
-//         id_karyawan: idKaryawanAktif, 
-//         status_produksi: statusBaru,
-//         catatan_karyawan: catatan
-//       });
-
-//       await fetchPengerjaan();
-//       handleCloseModal();
-//     } catch (err) {
-//       alert(err.response?.data?.message || "Gagal mengupdate status produksi");
-//     } finally {
-//       setSubmitting(false);
-//     }
-//   };
-  
 const renderCard = (item) => (
     <div
       className={`production-card ${item.status_produksi !== "selesai" ? "clickable" : ""}`}
@@ -172,7 +143,6 @@ const renderCard = (item) => (
         </p>
       )}
 
-      {/* 🌟 TAMPILAN CATATAN KELUHAN REVISI DARI DOKTER */}
       {item.status_produksi === "revisi" && item.deskripsi_revisi && (
         <div style={{ background: '#fee2e2', color: '#991b1b', padding: '10px', borderRadius: '8px', fontSize: '11px', marginTop: '10px', border: '1px solid #fca5a5' }}>
           <strong style={{ display: 'block', marginBottom: '3px' }}>⚠ Keluhan Revisi:</strong>
@@ -180,7 +150,7 @@ const renderCard = (item) => (
         </div>
       )}
 
-      {/* 🌟 TAMPILAN CATATAN KARYAWAN (TEKNISI) DI PALING BAWAH */}
+
       {item.catatan_karyawan && (
         <div style={{ marginTop: '12px', paddingTop: '10px', borderTop: '1px dashed #cbd5e1', fontSize: '11px', color: '#475569' }}>
           <strong style={{ display: 'block', marginBottom: '3px', color: '#334155' }}>Catatan Teknisi:</strong>
@@ -188,7 +158,6 @@ const renderCard = (item) => (
         </div>
       )}
 
-      {/* Badge Status */}
       <div style={{ marginTop: '12px' }}>
         {item.status_produksi === "revisi" && (
           <span className="warning-btn" style={{ fontWeight: 'bold' }}>Sedang Direvisi</span>
@@ -236,7 +205,7 @@ const renderCard = (item) => (
 
       </div>
 
-      {/* MODAL UPDATE STATUS */}
+    
       {showModal && selectedItem && (
         <div className="modal-overlay">
           <div className="modal-box">

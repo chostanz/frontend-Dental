@@ -14,12 +14,12 @@ const DetailPesanan = () => {
   const [loading, setLoading] = useState(true);
   const [errorMsg, setErrorMsg] = useState('');
 
-  // 🌟 State untuk Modal Revisi
+ 
   const [showModalRevisi, setShowModalRevisi] = useState(false);
   const [catatanRevisi, setCatatanRevisi] = useState('');
   const [submittingRevisi, setSubmittingRevisi] = useState(false);
 
-  // 🌟 Ambil Info Token untuk memastikan role Dokter
+  
   const token = localStorage.getItem('token');
   let userEmail = localStorage.getItem('email') || 'user@gmail.com';
   let isDokter = false;
@@ -53,10 +53,10 @@ const DetailPesanan = () => {
 
   useEffect(() => {
     fetchDetailData();
-    // eslint-disable-next-line
+  
   }, [id]);
 
-// 🌟 Fungsi Kirim Pengajuan Revisi ke Backend API
+
   const handleKirimRevisi = async () => {
     if (!catatanRevisi.trim()) {
       alert("Catatan poin revisi wajib diisi!");
@@ -64,7 +64,7 @@ const DetailPesanan = () => {
     }
     setSubmittingRevisi(true);
     try {
-      // Sesuaikan endpoint dan payload dengan backend Golang-mu
+      
       await apiClient.post(`/api/revisi`, {
         id_pesanan: id,
         deskripsi_revisi: catatanRevisi
@@ -73,7 +73,7 @@ const DetailPesanan = () => {
       alert("Pengajuan revisi pesanan berhasil dikirim!");
       setShowModalRevisi(false);
       setCatatanRevisi('');
-      fetchDetailData(); // Refresh data supaya statusnya otomatis berubah
+      fetchDetailData(); 
     } catch (err) {
       alert(err.response?.data?.message || "Gagal mengajukan revisi.");
     } finally {
@@ -90,7 +90,7 @@ const DetailPesanan = () => {
     <div className="dashboard-container">
       <div className="main-content">
         
-        {/* TOPBAR YANG KONSISTEN DENGAN EMAIL */}
+      
         <div className="topbar">
           <div className="topbar-left" style={{ display: 'flex', alignItems: 'center' }}>
             <button onClick={() => navigate(-1)} style={{ background: 'transparent', border: 'none', color: '#676060', fontSize: '18px', cursor: 'pointer', marginRight: '15px' }}>
@@ -106,7 +106,7 @@ const DetailPesanan = () => {
 
         <div className="detail-page-wrapper">
           
-          {/* HEADER SECTION - Tombol Revisi di Kanan Atas */}
+
           <div className="detail-header-section" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
               <h1 className="detail-title" style={{ margin: 0 }}>Order ID: #{pesanan.id_pesanan?.substring(0,8).toUpperCase()}</h1>
@@ -123,7 +123,7 @@ const DetailPesanan = () => {
               </span>
             </div>
 
-            {/* TOMBOL REVISI: Hanya muncul untuk Dokter dan jika pesanan Selesai */}
+         
             {isDokter && pesanan.status_pesanan === 'selesai' && (
               <button 
                 onClick={() => setShowModalRevisi(true)}
@@ -201,7 +201,6 @@ const DetailPesanan = () => {
         </div>
       </div>
 
-      {/* 🌟 MODAL FORM REVISI */}
       {showModalRevisi && (
         <div className="modal-overlay" style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', background: 'rgba(0,0,0,0.5)', display: 'flex', justifyContent: 'center', alignItems: 'center', zIndex: 999 }}>
           <div className="modal-box" style={{ background: 'white', padding: '30px', borderRadius: '16px', maxWidth: '450px', width: '90%', boxShadow: '0 10px 25px rgba(0,0,0,0.1)' }}>

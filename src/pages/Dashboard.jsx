@@ -135,7 +135,7 @@ const DokterDashboard = () => {
 
   return (
     <div>
-      {/* 🌟 Topbar Dokter Panggil di dalam return utama secara struktural */}
+
       <Topbar title="Dashboard Dokter" role="dokter" />
       
       <div style={{ display: "flex", justifyContent: "center", alignItems: "center", minHeight: "70vh", width: "100%" }}>
@@ -166,7 +166,7 @@ const DokterDashboard = () => {
   );
 };
 
-// === 4. DASHBOARD UTAMA (Directing Dinamis Berdasarkan Role) ===
+// === 4. DASHBOARD UTAMA ===
 const Dashboard = () => {
   const role = localStorage.getItem('role') || 'guest';
   const token = localStorage.getItem("token");
@@ -191,7 +191,7 @@ const Dashboard = () => {
     fetchUserIdentifier();
   }, [token]);
 
-  // 🌟 JIKA ROLE DOKTER, LANGSUNG TAMPILKAN BERANDA KHUSUS DOKTER
+
   if (role === 'dokter') {
     return <DokterDashboard />;
   }

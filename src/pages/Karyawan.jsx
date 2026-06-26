@@ -7,6 +7,7 @@ import "../style/Karyawan.css";
 
 const ROLE_LABEL = { cs: 'CS', teknisi: 'Teknisi', bos: 'Bos' };
 
+
 const roleBadgeStyle = (role) => {
   const map = {
     cs:      { background: '#dbeafe', color: '#1d4ed8' },
@@ -15,7 +16,9 @@ const roleBadgeStyle = (role) => {
   };
   return {
     display: 'inline-block',
-    padding: '4px 12px',
+    width: '80px',            
+    textAlign: 'center',      
+    padding: '6px 0',         
     borderRadius: '12px',
     fontSize: '12px',
     fontWeight: '600',
@@ -23,7 +26,7 @@ const roleBadgeStyle = (role) => {
   };
 };
 
-/* ─── Modal Tambah Karyawan ──────────────────────────────── */
+/* ─── Modal Tambah Karyawan  */
 function ModalTambah({ onClose, onSuccess }) {
   const [form, setForm] = useState({ nama: '', email: '', no_hp: '', role: 'cs' });
   const [loading, setLoading] = useState(false);
@@ -47,7 +50,7 @@ function ModalTambah({ onClose, onSuccess }) {
     }
   };
 
-  /* tampilkan password sementara setelah sukses */
+  
   if (tempPass) {
     return (
       <div className="modal-overlay">
@@ -258,7 +261,6 @@ function ModalHapus({ karyawan, onClose, onSuccess }) {
       onSuccess();
       onClose();
     } catch {
-      /* silent */
     } finally {
       setLoading(false);
     }
@@ -294,9 +296,9 @@ function Karyawan() {
   const [filterRole, setFilterRole] = useState('semua');
 
   const [modalTambah, setModalTambah] = useState(false);
-  const [modalEdit, setModalEdit] = useState(null);    // karyawan obj
-  const [modalReset, setModalReset] = useState(null);   // karyawan obj
-  const [modalHapus, setModalHapus] = useState(null);   // karyawan obj
+  const [modalEdit, setModalEdit] = useState(null);    
+  const [modalReset, setModalReset] = useState(null);   
+  const [modalHapus, setModalHapus] = useState(null);   
 
   const fetchKaryawan = async () => {
     try {
@@ -318,7 +320,7 @@ function Karyawan() {
 
   useEffect(() => { fetchKaryawan(); }, []);
 
-  // filter + search
+ 
   useEffect(() => {
     let result = [...karyawanList];
     if (filterRole !== 'semua') result = result.filter(k => k.role === filterRole);
@@ -339,7 +341,7 @@ function Karyawan() {
         
         <Topbar title="Manajemen Karyawan" />
 
-        {/* Filter & Button Container (Sejajar Sempurna) */}
+      
         <div className="filter-bar" style={{ display: 'flex', gap: '14px', marginBottom: '20px', alignItems: 'center' }}>
           
           <div className="filter-search" style={{ background: 'white', padding: '0 18px', borderRadius: '12px', boxShadow: '0 2px 8px rgba(0,0,0,0.06)', flex: 1, display: 'flex', alignItems: 'center', height: '46px' }}>
@@ -352,8 +354,10 @@ function Karyawan() {
             />
           </div>
 
+     
           <div className="filter-select">
             <select 
+              className="custom-select-role"
               value={filterRole} 
               onChange={e => setFilterRole(e.target.value)}
               style={{ padding: '0 36px 0 18px', borderRadius: '12px', border: 'none', boxShadow: '0 2px 8px rgba(0,0,0,0.06)', outline: 'none', fontFamily: 'Poppins', fontSize: '13px', color: '#222', background: 'white', height: '46px', cursor: 'pointer' }}
@@ -365,8 +369,8 @@ function Karyawan() {
             </select>
           </div>
 
-          {/* Tombol Tambah Karyawan Yang Ditunggu-tunggu */}
-         <button
+        
+          <button
             className="btn-tambah"
             style={{ 
               padding: '12px 20px', 
@@ -385,7 +389,6 @@ function Karyawan() {
 
         </div>
 
-        {/* Table Card (Tabel Rapi Disesuaikan Global CSS Lab) */}
         <div className="table-card" style={{ background: '#e0f2fe' }}>
           {loading ? (
             <p style={{ padding: 20, textAlign: 'center' }}>Memuat data karyawan...</p>
@@ -460,7 +463,7 @@ function Karyawan() {
         </div>
       </div>
 
-      {/* ── MODALS ── */}
+     
       {modalTambah && (
         <ModalTambah
           onClose={() => setModalTambah(false)}

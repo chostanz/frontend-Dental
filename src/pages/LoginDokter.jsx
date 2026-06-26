@@ -21,7 +21,7 @@ function LoginDokter() {
     setErrorMsg("");
 
     try {
-      // FIX: Langsung tembak API Dokter
+     
       const response = await apiClient.post("/login", {
         email: email,
         password: password,
@@ -32,9 +32,9 @@ function LoginDokter() {
       if (token) {
         localStorage.setItem("token", token);
         
-        // KARENA DOKTER TIDAK PUNYA FIELD ROLE, KITA HARDCODE SAJA DI SINI:
+        
         localStorage.setItem("role", "dokter");
-        localStorage.setItem('id_dokter', response.data.id_dokter); // Sesuai respons JSON login backend Anda
+        localStorage.setItem('id_dokter', response.data.id_dokter); 
 
         navigate("/dashboard");
       } else {
@@ -64,17 +64,31 @@ function LoginDokter() {
 
       <div className="right-panel">
         <div className="login-box">
-          <div className="avatar">
-            {/* Pakai icon stetoskop atau bedakan warnanya jika mau */}
-            <i className="fa-solid fa-user-doctor" style={{color: '#0C96E4'}}></i>
+          
+      
+          <div style={{ 
+            display: 'inline-flex', 
+            alignItems: 'center', 
+            justifyContent: 'center', 
+            background: '#e0f2fe', 
+            width: '64px', 
+            height: '64px', 
+            borderRadius: '50%', 
+            marginBottom: '16px' 
+          }}>
+            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#0C96E4" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
+              <circle cx="12" cy="7" r="4"></circle>
+            </svg>
           </div>
 
           <h3>Masuk Sebagai Dokter</h3>
 
           {errorMsg && <p style={{ color: "red", fontSize: "12px", textAlign: "center" }}>{errorMsg}</p>}
 
-          <div className="form-group">
-            <label>Email Dokter</label>
+       
+          <div className="form-group" style={{ textAlign: 'left' }}>
+            <label style={{ display: 'block', textAlign: 'left', marginBottom: '8px' }}>Email Dokter</label>
             <input
               type="email"
               placeholder="dr.nama@gmail.com"
@@ -83,8 +97,9 @@ function LoginDokter() {
             />
           </div>
 
-          <div className="form-group">
-            <label>Password</label>
+         
+          <div className="form-group" style={{ textAlign: 'left' }}>
+            <label style={{ display: 'block', textAlign: 'left', marginBottom: '8px' }}>Password</label>
             <input
               type="password"
               placeholder="••••••••"
@@ -93,14 +108,11 @@ function LoginDokter() {
             />
           </div>
 
-          <button className="btn" onClick={handleLogin} disabled={isLoading} style={{background: '#0C96E4'}}>
+          <button className="btn" onClick={handleLogin} disabled={isLoading} style={{ background: '#0C96E4', width: '100%' }}>
             {isLoading ? "Memproses..." : "Masuk Area Dokter"}
           </button>
 
           <div className="register-link">
-            {/* Bukan Dokter? <Link to="/" style={{color: 'blue'}}>Login Karyawan</Link>
-            <br/>
-             */}
             <br/>
             Belum punya akun? <Link to="/register">Register Dokter</Link>
           </div>

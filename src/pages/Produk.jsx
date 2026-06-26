@@ -97,7 +97,7 @@ const KatalogProduk = () => {
           </div>
           )}
 
-        {/* Form Input Sesuai Style Register Box */}
+      
         {showForm && isAdmin && (
           <div className="register-box" style={{ padding: '30px', margin: '10px 0 25px', maxWidth: '1100px' }}>
             <h3>{isEditing ? 'Edit Produk' : 'Tambah Produk Baru'}</h3><br/>
@@ -122,26 +122,37 @@ const KatalogProduk = () => {
           </div>
         )}
 
-        {/* Menggunakan class shipping-wrapper agar tabel konsisten seperti menu pesanan */}
+      
         <div className="shipping-wrapper" style={{ marginTop: '10px' }}>
           {loading ? <p style={{padding: '20px'}}>Memuat katalog...</p> : error ? <p style={{color: 'red', padding: '20px'}}>{error}</p> : (
-            <table className="shipping-table" style={{ width: '100%' }}>
+            <table className="shipping-table" style={{ width: '100%', borderCollapse: 'collapse' }}>
               <thead>
                 <tr>
-                  <th>Nama Produk</th>
-                  <th>Spesifikasi</th>
-                  <th>Harga</th>
+                  <th style={{ textAlign: 'left', paddingLeft: '20px' }}>Nama Produk</th>
+                  <th style={{ textAlign: 'left', paddingLeft: '20px' }}>Spesifikasi</th>
+                  <th style={{ textAlign: 'center' }}>Harga</th>
                   {isAdmin && <th style={{ textAlign: 'center' }}>Aksi</th>}
                 </tr>
               </thead>
               <tbody>
                 {produk.map((item) => (
                   <tr key={item.id_produk}>
-                    <td style={{ fontWeight: '600', color: '#222' }}>{item.nama_bahan}</td>
-                    <td>{item.spesifikasi}</td>
-                    <td style={{ color: '#3498db', fontWeight: '700' }}>
+                  
+                    <td style={{ fontWeight: '600', color: '#222', textAlign: 'left', paddingLeft: '20px' }}>
+                      {item.nama_bahan}
+                    </td>
+                    
+                 
+                    <td style={{ textAlign: 'left', paddingLeft: '20px', color: '#555' }}>
+                      {item.spesifikasi}
+                    </td>
+                    
+                 
+                    <td style={{ color: '#3498db', fontWeight: '700', textAlign: 'center' }}>
                       Rp {Number(item.harga).toLocaleString('id-ID')}
                     </td>
+                    
+                  
                     {isAdmin && (
                       <td style={{ textAlign: 'center', whiteSpace: 'nowrap' }}>
                         <button onClick={() => handleEditClick(item)} className="btn-approve" style={{ background: '#f6f34c', color: '#222', padding: '6px 16px', display: 'inline-block', marginRight: '8px' }}>Edit</button>

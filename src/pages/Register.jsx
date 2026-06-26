@@ -40,10 +40,8 @@ function Register() {
       };
 
       await apiClient.post("/register", payload); 
-
       alert("Register Berhasil!");
       navigate("/"); 
-
     } catch (err) {
       setErrorMsg(err.response?.data?.message || "Terjadi kesalahan saat registrasi.");
     } finally {
@@ -51,74 +49,146 @@ function Register() {
     }
   };
 
-  return (
-    <div className="register-page" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', background: '#f5f5f5', minHeight: '100vh', padding: '20px' }}>
+  const baseInputStyle = {
+    width: '100%',
+    padding: '14px 14px 14px 16px',
+    border: '1px solid #cbd5e1', 
+    background: '#ffffff', 
+    borderRadius: '12px',
+    outline: 'none',
+    fontSize: '14px',
+    color: '#333333',
+    boxSizing: 'border-box',
+    display: 'block'
+  };
 
-      <div className="header" style={{ textAlign: 'center', marginBottom: '25px' }}>
-        <img src="/assets/Logo.png" alt="Logo Dental" style={{ width: '90px', marginBottom: '10px' }} />
-        <h1 style={{ color: '#3498db', fontSize: '36px', fontWeight: '800', lineHeight: '1.1' }}>DENTAL</h1>
-        <h2 style={{ color: '#001a8d', fontSize: '24px', fontWeight: '700' }}>MANAGEMENT SYSTEM</h2>
-        <p className="subtitle" style={{ marginTop: '10px', fontWeight: '500', color: '#666', fontSize: '14px' }}>
+  const labelStyle = {
+    display: 'block',
+    marginBottom: '8px',
+    fontSize: '12px',
+    fontWeight: '700',
+    color: '#4a5568',
+    textAlign: 'left'
+  };
+
+  return (
+    <div style={{ width: '100%', boxSizing: 'border-box', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', background: '#ffffff', minHeight: '100vh', padding: '40px 20px', fontFamily: 'Inter, sans-serif' }}>
+
+      <div style={{ textAlign: 'center', marginBottom: '25px', width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+        
+        <img 
+          src="/src/assets/fix.png" 
+          alt="Logo Dental" 
+          style={{ 
+            width: '85px', 
+            height: 'auto', 
+            marginBottom: '10px',
+            filter: 'invert(53%) sepia(81%) saturate(2225%) hue-rotate(178deg) brightness(97%) contrast(93%)' 
+          }} 
+        />
+        
+        <h1 style={{ color: '#2298ea', fontSize: '34px', fontWeight: '800', letterSpacing: '0.5px', margin: '0' }}>DENTAL</h1>
+        <h2 style={{ color: '#001a8d', fontSize: '22px', fontWeight: '700', letterSpacing: '0.5px', margin: '4px 0 12px 0' }}>MANAGEMENT SYSTEM</h2>
+        <p style={{ fontWeight: '700', color: '#718096', fontSize: '13px', margin: '0' }}>
           Silakan Register Untuk Melanjutkan Ke Sistem
         </p>
       </div>
 
-      <div className="register-box" style={{ width: '100%', maxWidth: '750px', background: 'white', border: '1px solid #e2e8f0', borderRadius: '16px', padding: '35px', boxShadow: '0 10px 25px rgba(0,0,0,0.04)' }}>
+  
+      <div style={{ width: '100%', maxWidth: '850px', boxSizing: 'border-box', background: '#ffffff', border: '1px solid #e2e8f0', borderRadius: '24px', padding: '45px', boxShadow: '0 10px 30px rgba(0,0,0,0.03)' }}>
 
         {errorMsg && (
-          <div style={{ background: '#ffebee', color: '#c53030', padding: '12px 16px', borderRadius: '8px', marginBottom: '20px', fontSize: '13px', fontWeight: '500', border: '1px solid #ffcdd2' }}>
+          <div style={{ background: '#fef2f2', color: '#ef4444', padding: '12px 16px', borderRadius: '10px', marginBottom: '20px', fontSize: '13px', border: '1px solid #fee2e2', textAlign: 'left' }}>
             {errorMsg}
           </div>
         )}
 
-        <form className="form-register" onSubmit={handleRegister} style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+        <form onSubmit={handleRegister} style={{ width: '100%', display: 'block' }}>
+          
+         
+          <div style={{ display: 'flex', flexDirection: 'row', gap: '40px', marginBottom: '35px', width: '100%' }}>
+            
+       
+            <div style={{ flex: '1', display: 'flex', flexDirection: 'column', gap: '16px', width: '50%' }}>
+              <div>
+                <label style={labelStyle}>Email</label>
+                <input type="email" name="email" value={formData.email} onChange={handleChange} required style={baseInputStyle} />
+              </div>
 
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-            <div className="input-group" style={{ margin: 0 }}>
-              <label style={{ display: 'block', marginBottom: '6px', fontSize: '13px', fontWeight: '600', color: '#333' }}>Email</label>
-              <input type="email" name="email" value={formData.email} onChange={handleChange} required style={{ width: '100%', padding: '14px', border: '1px solid #cbd5e1', background: '#f8fafc', borderRadius: '10px', outline: 'none', fontSize: '13px' }} />
+              <div>
+                <label style={labelStyle}>Password</label>
+                <input type="password" name="password" value={formData.password} onChange={handleChange} required placeholder="••••••••" style={baseInputStyle} />
+              </div>
+
+              <div>
+                <label style={labelStyle}>Nama</label>
+                <input type="text" name="nama" value={formData.nama} onChange={handleChange} required style={baseInputStyle} />
+              </div>
+
+              <div>
+                <label style={labelStyle}>No Hp</label>
+                <input type="text" name="nohp" value={formData.nohp} onChange={handleChange} required style={baseInputStyle} />
+              </div>
             </div>
 
-            <div className="input-group" style={{ margin: 0 }}>
-              <label style={{ display: 'block', marginBottom: '6px', fontSize: '13px', fontWeight: '600', color: '#333' }}>Password</label>
-              <input type="password" name="password" value={formData.password} onChange={handleChange} required minLength={8} placeholder="Minimal 8 karakter" style={{ width: '100%', padding: '14px', border: '1px solid #cbd5e1', background: '#f8fafc', borderRadius: '10px', outline: 'none', fontSize: '13px' }} />
+        
+            <div style={{ flex: '1', display: 'flex', flexDirection: 'column', gap: '16px', width: '50%' }}>
+              <div>
+                <label style={labelStyle}>Klinik (Opsional)</label>
+                <input type="text" name="klinik" value={formData.klinik} onChange={handleChange} style={baseInputStyle} />
+              </div>
+
+              <div style={{ display: 'flex', flexDirection: 'column', flex: '1' }}>
+                <label style={labelStyle}>Alamat Lengkap</label>
+                <div style={{ flex: '1', display: 'flex' }}>
+                  <textarea 
+                    name="alamat" 
+                    value={formData.alamat} 
+                    onChange={handleChange} 
+                    required 
+                    style={{ 
+                      ...baseInputStyle, 
+                      height: '215px', 
+                      minHeight: '215px',
+                      resize: 'none',
+                      flex: '1'
+                    }} 
+                  />
+                </div>
+              </div>
             </div>
 
-            <div className="input-group" style={{ margin: 0 }}>
-              <label style={{ display: 'block', marginBottom: '6px', fontSize: '13px', fontWeight: '600', color: '#333' }}>Nama Lengkap</label>
-              <input type="text" name="nama" value={formData.nama} onChange={handleChange} required style={{ width: '100%', padding: '14px', border: '1px solid #cbd5e1', background: '#f8fafc', borderRadius: '10px', outline: 'none', fontSize: '13px' }} />
-            </div>
+          </div>
 
-            <div className="input-group" style={{ margin: 0 }}>
-              <label style={{ display: 'block', marginBottom: '6px', fontSize: '13px', fontWeight: '600', color: '#333' }}>No. HP</label>
-              <input type="text" name="nohp" value={formData.nohp} onChange={handleChange} required style={{ width: '100%', padding: '14px', border: '1px solid #cbd5e1', background: '#f8fafc', borderRadius: '10px', outline: 'none', fontSize: '13px' }} />
-            </div>
+         
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', width: '100%', gap: '16px' }}>
+            <button
+              type="submit"
+              disabled={loading}
+              style={{ 
+                width: '100%', 
+                maxWidth: '320px', 
+                padding: '13px', 
+                background: '#34a8e4', 
+                color: '#ffffff', 
+                border: 'none', 
+                borderRadius: '12px', 
+                fontWeight: '700', 
+                cursor: 'pointer', 
+                fontSize: '14px',
+                boxShadow: '0 4px 14px rgba(52, 168, 228, 0.3)',
+                display: 'block'
+              }}
+            >
+              {loading ? "Memproses..." : "Register"}
+            </button>
 
-            <div className="input-group" style={{ margin: 0 }}>
-              <label style={{ display: 'block', marginBottom: '6px', fontSize: '13px', fontWeight: '600', color: '#333' }}>Klinik <span style={{color: '#64748b', fontSize: '11px'}}>(Opsional)</span></label>
-              <input type="text" name="klinik" value={formData.klinik} onChange={handleChange} style={{ width: '100%', padding: '14px', border: '1px solid #cbd5e1', background: '#f8fafc', borderRadius: '10px', outline: 'none', fontSize: '13px' }} />
-            </div>
-
-            <div className="input-group" style={{ margin: 0 }}>
-              <label style={{ display: 'block', marginBottom: '6px', fontSize: '13px', fontWeight: '600', color: '#333' }}>Alamat Lengkap</label>
-              <textarea name="alamat" value={formData.alamat} onChange={handleChange} style={{ width: '100%', padding: '14px', border: '1px solid #cbd5e1', background: '#f8fafc', borderRadius: '10px', outline: 'none', fontSize: '13px', height: '110px', resize: 'vertical' }} />
+            <div style={{ fontSize: '13px', color: '#718096', fontWeight: '500' }}>
+              Sudah punya akun ? <Link to="/" style={{ color: '#2298ea', fontWeight: '700', textDecoration: 'none', marginLeft: '4px' }}>Login</Link>
             </div>
           </div>
 
-          <button
-            type="submit"
-            className="btn register-btn"
-            disabled={loading}
-            style={{ width: '100%', padding: '15px', background: '#3498db', color: 'white', border: 'none', borderRadius: '10px', fontWeight: 'bold', cursor: 'pointer', fontSize: '15px', marginTop: '10px' }}
-          >
-            {loading ? "Memproses..." : "Daftar Akun"}
-          </button>
-
         </form>
-
-        <div className="login-link" style={{ textAlign: 'center', marginTop: '20px', fontSize: '13px', color: '#4a5568' }}>
-          Sudah punya akun? <Link to="/" style={{ color: '#3498db', fontWeight: '600', textDecoration: 'none' }}>Login</Link>
-        </div>
 
       </div>
     </div>

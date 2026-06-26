@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import apiClient from '../config/axiosConfig';
-import "../style/BuatPesanan.css"; // <-- Impor CSS Khusus
+import "../style/BuatPesanan.css";
 
 const BuatPesanan = () => {
   const navigate = useNavigate();
@@ -82,7 +82,7 @@ const BuatPesanan = () => {
         detail_pesanan: detailPesanan
       };
 
-      // endpoint disesuaikan dengan routes kamu: POST /api/pesanan
+
       await apiClient.post('/api/pesanan/dokter', payload);
       alert('Pesanan berhasil dibuat!');
       navigate('/pesanan'); 
@@ -103,7 +103,6 @@ const BuatPesanan = () => {
           </div>
         </div>
 
-        {/* Menggunakan class modular murni */}
         <div className="pesanan-page-wrapper">
           <button className="pesanan-back-btn" onClick={() => navigate('/pesanan')}>
             &larr; Kembali

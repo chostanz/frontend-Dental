@@ -28,11 +28,10 @@ function Profil() {
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
 
-  // 1. Fetch Data Profil
-useEffect(() => {
+
+  useEffect(() => {
     const fetchProfil = async () => {
       try {
-        // Tentukan endpoint berdasarkan role yang sedang aktif
         const endpoint = role === 'dokter' ? '/api/profil/dokter' : '/api/profil/karyawan';
         
         const res = await apiClient.get(endpoint);
@@ -69,7 +68,6 @@ useEffect(() => {
     }
   };
 
-
   const handleGantiPassword = async () => {
     if (passData.new_password !== passData.confirm_password) {
       alert("Konfirmasi password tidak cocok!");
@@ -98,62 +96,75 @@ useEffect(() => {
     <div className="dashboard-container">
       <div className="main-content">
         
-        {/* TOPBAR */}
-        <div className="topbar">
+      
+        <div className="topbar" style={{ display: 'flex', justifyContent: 'between', alignItems: 'center' }}>
           <div className="topbar-left">
             <h2>Profil</h2>
           </div>
-          <div className="topbar-right">
-             <span style={{fontSize: '14px', color: '#676060'}}>{formData.email}</span>
-             <i className="fa-regular fa-circle-user admin-avatar" style={{marginLeft: '10px', fontSize: '24px'}}></i>
+          <div className="topbar-right" style={{ display: 'flex', alignItems: 'center' }}>
+             <span style={{ fontSize: '14px', color: '#676060' }}>{formData.email}</span>
+         
+             <svg 
+               width="28" 
+               height="28" 
+               viewBox="0 0 24 24" 
+               fill="none" 
+               stroke="#676060" 
+               strokeWidth="2" 
+               strokeLinecap="round" 
+               strokeLinejoin="round" 
+               style={{ marginLeft: '10px' }}
+             >
+               <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+               <circle cx="12" cy="7" r="4" />
+             </svg>
           </div>
         </div>
 
-        {/* LINK KEMBALI */}
-        <div style={{ marginBottom: '20px' }}>
+      
+        <div style={{ marginBottom: '20px', textAlign: 'left' }}>
           <button onClick={() => navigate(-1)} style={{ background: 'none', border: 'none', color: '#0C96E4', cursor: 'pointer', fontWeight: '600' }}>
             ← Kembali
           </button>
         </div>
 
-        {/* KONTEN UTAMA (CENTER CARD) */}
+       
         <div style={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
           <div style={{ background: '#D7F0FF', padding: '40px', borderRadius: '20px', boxShadow: '0 4px 15px rgba(0,0,0,0.05)', width: '100%', maxWidth: '500px' }}>
             
-            {/* INPUT EMAIL (READONLY) */}
-            <div style={{ marginBottom: '15px' }}>
+           
+            <div style={{ marginBottom: '15px', textAlign: 'left' }}>
               <label style={{ display: 'block', marginBottom: '5px', fontSize: '13px', fontWeight: '600', color: '#666' }}>Email</label>
               <input 
                 type="text" 
                 value={formData.email} 
                 disabled 
-                style={{ width: '100%', padding: '12px', borderRadius: '10px', border: '1px solid #ddd', background: '#f9f9f9' }}
+                style={{ width: '100%', padding: '12px', borderRadius: '10px', border: '1px solid #ddd', background: '#f9f9f9', boxSizing: 'border-box' }}
               />
             </div>
 
-            {/* INPUT NAMA */}
-            <div style={{ marginBottom: '15px' }}>
+           
+            <div style={{ marginBottom: '15px', textAlign: 'left' }}>
               <label style={{ display: 'block', marginBottom: '5px', fontSize: '13px', fontWeight: '600', color: '#666' }}>Nama</label>
               <input 
                 type="text" 
                 value={formData.nama} 
                 onChange={(e) => setFormData({...formData, nama: e.target.value})}
-                style={{ width: '100%', padding: '12px', borderRadius: '10px', border: '1px solid #ddd', color:'#666', background:'white'}}
+                style={{ width: '100%', padding: '12px', borderRadius: '10px', border: '1px solid #ddd', color:'#666', background:'white', boxSizing: 'border-box'}}
               />
             </div>
 
-            {/* INPUT NO HP */}
-            <div style={{ marginBottom: '25px'}}>
+            <div style={{ marginBottom: '25px', textAlign: 'left' }}>
               <label style={{ display: 'block', marginBottom: '5px', fontSize: '13px', fontWeight: '600', color:'#666' }}>No Hp</label>
               <input 
                 type="text" 
                 value={formData.no_hp} 
                 onChange={(e) => setFormData({...formData, no_hp: e.target.value})}
-                style={{ width: '100%', padding: '12px', borderRadius: '10px', border: '1px solid #ddd', color:'#666', background:'white' }}
+                style={{ width: '100%', padding: '12px', borderRadius: '10px', border: '1px solid #ddd', color:'#666', background:'white', boxSizing: 'border-box' }}
               />
             </div>
 
-            {/* TOMBOL AKSI */}
+          
             <button 
               onClick={handleUpdateProfil}
               disabled={submitting}
@@ -173,7 +184,6 @@ useEffect(() => {
         </div>
       </div>
 
-      {/* MODAL GANTI PASSWORD (POPUP) */}
       {showModal && (
         <div className="modal-overlay">
           <div className="modal-box" style={{ maxWidth: '400px', background:'#D7F0FF'}}>
@@ -185,7 +195,7 @@ useEffect(() => {
                 placeholder="Password Lama"
                 className="modal-select" 
                 value={passData.old_password}
-                style={{ width: '100%', padding: '12px', borderRadius: '10px', border: '1px solid #ddd', color:'#666', background:'white' }}
+                style={{ width: '100%', padding: '12px', borderRadius: '10px', border: '1px solid #ddd', color:'#666', background:'white', boxSizing: 'border-box' }}
                 onChange={(e) => setPassData({...passData, old_password: e.target.value})}
               />
             </div>
@@ -196,7 +206,7 @@ useEffect(() => {
                 placeholder="Password Baru"
                 className="modal-select" 
                 value={passData.new_password}
-                 style={{ width: '100%', padding: '12px', borderRadius: '10px', border: '1px solid #ddd', color:'#666', background:'white' }}
+                 style={{ width: '100%', padding: '12px', borderRadius: '10px', border: '1px solid #ddd', color:'#666', background:'white', boxSizing: 'border-box' }}
                 onChange={(e) => setPassData({...passData, new_password: e.target.value})}
               />
             </div>
@@ -207,7 +217,7 @@ useEffect(() => {
                 placeholder="Konfirmasi Password Baru"
                 className="modal-select" 
                 value={passData.confirm_password}
-                 style={{ width: '100%', padding: '12px', borderRadius: '10px', border: '1px solid #ddd', color:'#666', background:'white' }}
+                 style={{ width: '100%', padding: '12px', borderRadius: '10px', border: '1px solid #ddd', color:'#666', background:'white', boxSizing: 'border-box' }}
                 onChange={(e) => setPassData({...passData, confirm_password: e.target.value})}
               />
             </div>

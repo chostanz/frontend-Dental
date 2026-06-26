@@ -53,7 +53,7 @@ function Transaksi() {
         } catch (e) {}
       }
 
-      // Tentukan URL berdasarkan Role
+     
       const endpoint = (isDokter && idDokter) 
         ? `/api/transaksi/dokter/${idDokter}` 
         : `/api/transaksi`;
@@ -78,7 +78,6 @@ function Transaksi() {
     setShowModal(true);
   };
 
-  // --- FUNGSI EXPORT / DOWNLOAD EXCEL / CSV ---
   const handleExportCSV = () => {
     if (transaksiList.length === 0) {
         alert("Data transaksi kosong untuk di-export!");
@@ -157,7 +156,7 @@ function Transaksi() {
             placeholder="Cari ID Pesanan..."
             className="search-transaksi"
             style={{padding: '12px 15px', borderRadius: '10px', border: '1px solid #cbd5e1', flex: 1, outline: 'none', background: 'white'}}
-          />
+            />
           <select className="filter-status" style={{padding: '12px 15px', borderRadius: '10px', border: '1px solid #cbd5e1', background: 'white', outline: 'none'}}>
             <option>Semua</option>
             <option>Lunas</option>
@@ -167,9 +166,36 @@ function Transaksi() {
           <button 
             className="btn" 
             onClick={handleExportCSV}
-            style={{padding: '12px 20px', width: 'auto', background: '#3498db', border: 'none', borderRadius: '10px', cursor: 'pointer', fontWeight: '600'} }
+            style={{
+              padding: '12px 20px', 
+              width: 'auto', 
+              background: '#3498db', 
+              border: 'none', 
+              borderRadius: '10px', 
+              cursor: 'pointer', 
+              fontWeight: '600',
+              color: 'white', 
+              display: 'flex', 
+              alignItems: 'center',
+              gap: '8px' 
+            }}
           >
-            <i className="fa-solid fa-download" style={{marginRight: '8px'}}></i> Export CSV
+           
+            <svg 
+              width="18" 
+              height="18" 
+              viewBox="0 0 24 24" 
+              fill="none" 
+              stroke="currentColor" 
+              strokeWidth="2" 
+              strokeLinecap="round" 
+              strokeLinejoin="round"
+            >
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+              <polyline points="7 10 12 15 17 10" />
+              <line x1="12" y1="15" x2="12" y2="3" />
+            </svg>
+            Export CSV
           </button>
         </div>
 

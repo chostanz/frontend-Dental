@@ -9,7 +9,7 @@ const API_BASE = "http://localhost:8080";
 const STATUS_ORDER = ["Menunggu", "Dijemput Kurir", "Dalam Pengiriman", "Diterima"];
 
 function DetailPengiriman() {
-  const { id } = useParams(); // id_pengiriman
+  const { id } = useParams(); 
   const navigate = useNavigate();
 
   const [details, setDetails] = useState([]);
@@ -115,7 +115,6 @@ function DetailPengiriman() {
           <div className="state-info state-error">{error}</div>
         ) : (
           <>
-            {/* Stepper */}
             <div className="stepper-card">
               <h4>Status Pengiriman</h4>
               <div className="stepper">
@@ -137,7 +136,7 @@ function DetailPengiriman() {
               </div>
             </div>
 
-            {/* Timeline */}
+        
             <div className="timeline-card">
               <div className="timeline-header">
                 <h4>Riwayat Status</h4>
@@ -180,7 +179,6 @@ function DetailPengiriman() {
         )}
       </div>
 
-      {/* Modal Update Status */}
       {showUpdateModal && (
         <div className="modal-overlay" onClick={() => setShowUpdateModal(false)}>
           <div className="modal-box" onClick={(e) => e.stopPropagation()}>

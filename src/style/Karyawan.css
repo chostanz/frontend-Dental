@@ -5,7 +5,6 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap');
 
-/* ── RESET DASAR ─────────────────────────────────────────────── */
 *, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
@@ -13,7 +12,7 @@
   font-family: 'Poppins', sans-serif;
 }
 
-/* ── LAYOUT UTAMA ────────────────────────────────────────────── */
+/* LAYOUT */
 .karyawan-page {
   display: flex;
   height: 100vh;
@@ -21,7 +20,7 @@
   overflow: hidden;
 }
 
-/* ── SIDEBAR ─────────────────────────────────────────────────── */
+/*  SIDEBAR */
 .karyawan-sidebar {
   width: 160px;
   min-width: 160px;
@@ -102,7 +101,6 @@
   background: #0d47a1;
 }
 
-/* ── AREA KONTEN UTAMA ───────────────────────────────────────── */
 .karyawan-main {
   flex: 1;
   display: flex;
@@ -111,7 +109,7 @@
   padding: 0 24px 24px;
 }
 
-/* ── TOPBAR ──────────────────────────────────────────────────── */
+
 .karyawan-topbar {
   display: flex;
   justify-content: space-between;
@@ -142,7 +140,7 @@
   background: #2980b9;
 }
 
-/* ── FILTER BAR ──────────────────────────────────────────────── */
+
 .karyawan-filter-bar {
   display: flex;
   gap: 12px;
@@ -187,7 +185,7 @@
   min-width: 140px;
 }
 
-/* ── TABEL KARYAWAN ──────────────────────────────────────────── */
+
 .karyawan-table-wrap {
   background: #d7f0ff;
   border-radius: 14px;
@@ -252,7 +250,6 @@
   font-size: 13px;
 }
 
-/* ── BADGE ROLE ──────────────────────────────────────────────── */
 .role-badge {
   display: inline-block;
   padding: 4px 12px;
@@ -267,7 +264,7 @@
 .role-badge.bos      { background: #dcfce7; color: #166534; }
 .role-badge.default  { background: #f1f5f9; color: #475569; }
 
-/* ── TOMBOL AKSI DI TABEL ────────────────────────────────────── */
+
 .karyawan-aksi {
   display: flex;
   gap: 6px;
@@ -288,8 +285,6 @@
 .btn-aksi.edit   { background: #dbeafe; color: #1d4ed8; }
 .btn-aksi.reset  { background: #fff7ed; color: #c2410c; }
 .btn-aksi.hapus  { background: #fee2e2; color: #991b1b; }
-
-/* ── MODAL OVERLAY ───────────────────────────────────────────── */
 .k-modal-overlay {
   position: fixed;
   inset: 0;
@@ -316,7 +311,7 @@
   to   { transform: scale(1);    opacity: 1; }
 }
 
-/* ── MODAL HEADER ────────────────────────────────────────────── */
+
 .k-modal-header {
   padding: 16px 22px;
   font-size: 15px;
@@ -330,7 +325,7 @@
 .k-modal-header.warning { background: #d97706; }
 .k-modal-header.success { background: #16a34a; }
 
-/* ── MODAL BODY ──────────────────────────────────────────────── */
+
 .k-modal-body {
   padding: 28px 26px;
 }
@@ -342,7 +337,7 @@
   margin-bottom: 20px;
 }
 
-/* ── FORM DI DALAM MODAL ─────────────────────────────────────── */
+
 .k-form-group {
   margin-bottom: 14px;
 }
@@ -373,7 +368,6 @@
   box-shadow: 0 0 0 2px #93c5fd;
 }
 
-/* ── ERROR TEXT MODAL ────────────────────────────────────────── */
 .k-modal-error {
   color: #dc2626;
   font-size: 13px;
@@ -383,7 +377,7 @@
   border-radius: 6px;
 }
 
-/* ── KOTAK PASSWORD SEMENTARA PADA MODAL ────────────────────── */
+
 .k-password-box {
   background: #f0f9ff;
   border: 1.5px solid #7dd3fc;
@@ -398,7 +392,6 @@
   word-break: break-all;
 }
 
-/* Penyesuaian agar tidak bentrok layout wrapper container global */
 .filter-bar input {
   border: none;
   outline: none;
@@ -421,7 +414,6 @@
   line-height: 1.6;
 }
 
-/* ── TOMBOL AKSI MODAL ───────────────────────────────────────── */
 .k-modal-footer {
   display: flex;
   justify-content: flex-end;
@@ -448,7 +440,7 @@
 .k-btn.reset   { background: #fee2e2; color: #991b1b; }
 .k-btn.done    { background: #dcfce7; color: #166534; }
 
-/* ── STATE: LOADING & ERROR HALAMAN ─────────────────────────── */
+
 .karyawan-state-msg {
   padding: 32px;
   text-align: center;
@@ -459,4 +451,27 @@
 .karyawan-state-msg.error {
   color: #dc2626;
   font-weight: 500;
+}
+
+.custom-select-role {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23222222' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'></polyline></svg>") !important;
+  background-repeat: no-repeat !important;
+  background-position: right 14px center !important;
+  background-size: 12px !important;
+}
+
+
+.pesanan-table th, 
+.pesanan-table td {
+  padding: 14px 16px;
+  vertical-align: middle;
+  text-align: left;
+}
+
+
+.pesanan-table th:last-child {
+  text-align: center;
 }

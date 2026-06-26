@@ -26,7 +26,7 @@ function Pengiriman() {
 
   const isCS = role === "cs" || role === "bos";
 
- const fetchPengiriman = async () => {
+  const fetchPengiriman = async () => {
     try {
       setLoading(true);
       
@@ -212,14 +212,15 @@ function Pengiriman() {
 
       </div>
 
-      {/* Modal Tambah Pengiriman */}
+    
       {showModal && (
         <div className="modal-overlay" onClick={() => setShowModal(false)}>
           <div className="modal-box" onClick={(e) => e.stopPropagation()}>
             <h3>Tambah Pengiriman</h3>
             <p className="modal-sub">Hanya pesanan yang sudah selesai diproduksi yang bisa dikirim.</p>
 
-            <label>Pesanan</label>
+           
+            <label style={{ textAlign: "left", display: "block", width: "100%" }}>Pesanan</label>
             <select
               value={form.id_pesanan}
               onChange={(e) => setForm({ ...form, id_pesanan: e.target.value })}
@@ -232,7 +233,8 @@ function Pengiriman() {
               ))}
             </select>
 
-            <label>Jasa Kurir</label>
+         
+            <label style={{ textAlign: "left", display: "block", width: "100%" }}>Jasa Kurir</label>
             <select
               value={form.nama_jasa}
               onChange={(e) => setForm({ ...form, nama_jasa: e.target.value })}
@@ -243,7 +245,8 @@ function Pengiriman() {
               ))}
             </select>
 
-            <label>No. Resi</label>
+           
+            <label style={{ textAlign: "left", display: "block", width: "100%" }}>No. Resi</label>
             <input
               type="text"
               placeholder="Masukkan nomor resi"

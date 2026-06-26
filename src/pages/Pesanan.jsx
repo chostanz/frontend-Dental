@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from "react-router-dom"; 
 import { jwtDecode } from "jwt-decode";
 import apiClient from '../config/axiosConfig';
-import Topbar from '../components/Topbar'; // 🌟 Integrasi Topbar Dinamis
+import Topbar from '../components/Topbar'; 
 import "../style/style.css";
 
 function Pesanan() {
@@ -11,10 +11,9 @@ function Pesanan() {
   const [loading, setLoading] = useState(true);
   const [errorMsg, setErrorMsg] = useState('');
   
-  // State pencarian dan filter
   const [search, setSearch] = useState('');
   const [filterStatus, setFilterStatus] = useState('Semua');
-  const [filterDate, setFilterDate] = useState(''); // Default kosong
+  const [filterDate, setFilterDate] = useState(''); 
 
   const token = localStorage.getItem('token');
 
@@ -51,7 +50,6 @@ function Pesanan() {
         
       } catch (err) {
         console.error("Detail Gagal Fetching:", err.response || err.message);
-        
         if (err.response?.status === 401 || err.response?.status === 403) {
           setErrorMsg('Sesi login Anda habis atau tidak memiliki hak akses.');
         } else {
@@ -83,7 +81,22 @@ function Pesanan() {
     } catch (e) {}
   }
 
-  // 🌟 LOGIKA FILTER & SEARCH RAPI AMAN DARI ZONA WAKTU DB
+  
+  const formatKeBulanSaja = (tglStr) => {
+    if (!tglStr || tglStr.length < 7) return '-';
+    
+   
+    const kodeBulan = tglStr.substring(5, 7);
+    
+    const daftarBulan = {
+      '01': 'Januari', '02': 'Februari', '03': 'Maret', '04': 'April',
+      '05': 'Mei', '06': 'Juni', '07': 'Juli', '08': 'Agustus',
+      '09': 'September', '10': 'Oktober', '11': 'November', '12': 'Desember'
+    };
+
+    return daftarBulan[kodeBulan] || 'Format Salah';
+  };
+
   const filtered = pesananList.filter((item) => {
     const matchSearch =
       search === "" ||
@@ -95,10 +108,9 @@ function Pesanan() {
 
     let matchDate = true;
     if (filterDate && item.tgl_pesanan) {
-      // Ambil 10 digit awal string tanggal (YYYY-MM-DD) kemudian potong (YYYY-MM)
-      const dateString = item.tgl_pesanan.substring(0, 10);
-      const dbMonthStr = dateString.substring(0, 7); 
-      matchDate = dbMonthStr === filterDate;
+    
+      const dbYearMonth = item.tgl_pesanan.substring(0, 7); 
+      matchDate = dbYearMonth === filterDate;
     }
 
     return matchSearch && matchFilter && matchDate;
@@ -108,7 +120,6 @@ function Pesanan() {
     <div className="dashboard-container">
       <div className="main-content">
 
-        {/* 🌟 Topbar Dinamis Rapi */}
         <Topbar 
           title="Pesanan" 
           rightAction={
@@ -120,7 +131,6 @@ function Pesanan() {
           }
         />
 
-        {/* 🌟 FILTER BAR (Tinggi Mutlak Dikunci 46px Biar Sejajar Sempurna) */}
         <div className="filter-bar" style={{display: 'flex', gap: '14px', marginBottom: '20px', alignItems: 'center'}}>
           
           <div className="filter-search" style={{background: 'white', padding: '0 18px', borderRadius: '12px', boxShadow: '0 2px 8px rgba(0,0,0,0.06)', flex: 1, height: '46px', display: 'flex', alignItems: 'center'}}>
@@ -137,7 +147,26 @@ function Pesanan() {
             <select 
               value={filterStatus}
               onChange={(e) => setFilterStatus(e.target.value)}
-              style={{padding: '0 36px 0 18px', borderRadius: '12px', border: 'none', boxShadow: '0 2px 8px rgba(0,0,0,0.06)', outline: 'none', fontFamily: 'Poppins', fontSize: '13px', background: 'white', color: '#222', cursor: 'pointer', height: '46px'}}
+              style={{
+                padding: '0 38px 0 18px', 
+                borderRadius: '12px', 
+                border: 'none', 
+                boxShadow: '0 2px 8px rgba(0,0,0,0.06)', 
+                outline: 'none', 
+                fontFamily: 'Poppins', 
+                fontSize: '13px', 
+                background: 'white', 
+                color: '#222', 
+                cursor: 'pointer', 
+                height: '46px',
+                appearance: 'none', 
+                WebkitAppearance: 'none',
+                MozAppearance: 'none',
+                backgroundImage: `url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23676060' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'></polyline></svg>")`,
+                backgroundRepeat: 'no-repeat',
+                backgroundPosition: 'right 14px center',
+                backgroundSize: '16px'
+              }}
             >
               <option>Semua</option>
               <option>Proses</option>
@@ -172,7 +201,6 @@ function Pesanan() {
           )}
         </div>
 
-        {/* TABLE CARD */}
         <div className="table-card">
           {loading ? (
             <p style={{ padding: '20px', textAlign: 'center' }}>Memuat pesanan...</p>
@@ -184,7 +212,7 @@ function Pesanan() {
                 <tr>
                   <th>ID</th>
                   <th>Pesanan</th>
-                  <th>Tgl Pesanan</th>
+                  <th>Bulan Pesanan</th>
                   <th>Status</th>
                   <th>Aksi</th>
                 </tr>
@@ -203,7 +231,8 @@ function Pesanan() {
                       <td style={{ fontSize: '12px', color: '#676060' }}>
                         Protesa Dental Lab
                       </td>
-                      <td>{new Date(item.tgl_pesanan).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' })}</td>
+                  
+                      <td>{formatKeBulanSaja(item.tgl_pesanan)}</td>
                       <td>
                         <span className={`badge ${getStatusClass(item.status_pesanan)}`} style={{textTransform: 'capitalize'}}>
                           {item.status_pesanan}

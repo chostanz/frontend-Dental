@@ -108,9 +108,7 @@ function Persetujuan() {
               <div className="approval-left">
                 <div className="approval-icon">👤</div>
                 <div className="approval-info">
-                  {/* Catatan: backend kamu belum JOIN ke tabel dokter,
-                      jadi sementara tampilkan id_pesanan & id_dokter dulu.
-                      Idealnya GetPesananPending di-update biar return nama dokter juga */}
+                 
                   <h3>{pesanan.id_dokter}</h3>
                   <p>Pesanan #{pesanan.id_pesanan.slice(0, 8)}</p>
                   <small>
@@ -141,7 +139,7 @@ function Persetujuan() {
 
       </div>
 
-      {/* MODAL KONFIRMASI sesuai Frame 37 */}
+    
       {showModal && (
         <div className="modal-overlay">
           <div className="modal-box">
