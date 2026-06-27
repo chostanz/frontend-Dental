@@ -202,47 +202,50 @@ function Transaksi() {
           ) : errorMsg ? (
             <p style={{ textAlign: "center", color: "red", padding: "20px" }}>{errorMsg}</p>
           ) : (
-            <table className="transaksi-table" style={{width: '100%', borderCollapse: 'collapse'}}>
+            <table className="transaksi-table" style={{width: '100%', borderCollapse: 'collapse', tableLayout: 'fixed'}}>
               <thead>
                 <tr style={{borderBottom: '2px solid #f0f4f8', textAlign: 'left'}}>
-                  <th style={{padding: '12px 10px', color: '#676060'}}>ID Transaksi</th>
-                  <th style={{padding: '12px 10px', color: '#676060'}}>ID Pesanan</th>
-                  <th style={{padding: '12px 10px', color: '#676060'}}>Dokter</th>
-                  <th style={{padding: '12px 10px', color: '#676060'}}>Tgl Transaksi</th>
-                  <th style={{padding: '12px 10px', color: '#676060', textAlign: 'right'}}>Total Tagihan</th>
-                  <th style={{padding: '12px 10px', color: '#676060', textAlign: 'center'}}>Metode</th>
-                  <th style={{padding: '12px 10px', color: '#676060', textAlign: 'center'}}>Status</th>
-                  <th style={{padding: '12px 10px', color: '#676060', textAlign: 'center'}}>Aksi</th>
+                  {/* Font Th dikecilkan jadi 12px & diberi font-weight normal agar lurus vertikal dengan data di bawahnya */}
+                  <th style={{padding: '12px 10px', color: '#676060', fontSize: '12px', fontWeight: '500', width: '14%'}}>ID Transaksi</th>
+                  <th style={{padding: '12px 10px', color: '#676060', fontSize: '12px', fontWeight: '500', width: '13%'}}>ID Pesanan</th>
+                  <th style={{padding: '12px 10px', color: '#676060', fontSize: '12px', fontWeight: '500', width: '15%'}}>Dokter</th>
+                  <th style={{padding: '12px 10px', color: '#676060', fontSize: '12px', fontWeight: '500', width: '14%'}}>Tgl Transaksi</th>
+                  <th style={{padding: '12px 10px', color: '#676060', fontSize: '12px', fontWeight: '500', textAlign: 'right', width: '15%'}}>Total Tagihan</th>
+                  <th style={{padding: '12px 10px', color: '#676060', fontSize: '12px', fontWeight: '500', textAlign: 'center', width: '10%'}}>Metode</th>
+                  <th style={{padding: '12px 10px', color: '#676060', fontSize: '12px', fontWeight: '500', textAlign: 'center', width: '11%'}}>Status</th>
+                  <th style={{padding: '12px 10px', color: '#676060', fontSize: '12px', fontWeight: '500', textAlign: 'center', width: '13%'}}>Aksi</th>
                 </tr>
               </thead>
               <tbody>
                 {transaksiList.length === 0 ? (
                   <tr>
-                    <td colSpan="8" style={{ textAlign: "center", padding: "40px", color: '#676060' }}>Belum ada data transaksi.</td>
+                    <td colSpan="8" style={{ textAlign: "center", padding: "40px", color: '#676060', fontSize: '12px' }}>Belum ada data transaksi.</td>
                   </tr>
                 ) : (
                   transaksiList.map((trx) => (
                     <tr key={trx.id_transaksi} style={{borderBottom: '1px solid #f0f4f8'}}>
-                      <td style={{padding: '15px 10px', fontWeight: '600', color: '#222'}}>
+                      {/* Font ukuran data utama memakai 12px, data sekunder (tgl/nama) memakai 11px */}
+                      <td style={{padding: '15px 10px', fontWeight: '600', color: '#222', fontSize: '12px'}}>
                         #{trx.id_transaksi ? trx.id_transaksi.substring(0,8).toUpperCase() : "-"}
                       </td>
-                      <td style={{padding: '15px 10px', color: '#3498db', fontWeight: '600'}}>
+                      <td style={{padding: '15px 10px', color: '#3498db', fontWeight: '600', fontSize: '12px'}}>
                         {trx.id_pesanan ? trx.id_pesanan.substring(0,8).toUpperCase() : "-"}
                       </td>
-                      <td style={{padding: '15px 10px', color: '#676060', fontSize: '13px'}}>
+                      <td style={{padding: '15px 10px', color: '#676060', fontSize: '11px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis'}}>
                         drg. {trx.nama_dokter || "-"}
                       </td>
-                      <td style={{padding: '15px 10px', fontSize: '13px'}}>
+                      <td style={{padding: '15px 10px', fontSize: '11px', color: '#555'}}>
                         {new Date(trx.tgl_transaksi).toLocaleDateString('id-ID')}
                       </td>
-                      <td style={{padding: '15px 10px', textAlign: 'right', fontWeight: 'bold', color: '#222'}}>
+                      <td style={{padding: '15px 10px', textAlign: 'right', fontWeight: '700', color: '#222', fontSize: '12px'}}>
                         Rp {Number(trx.total_harga).toLocaleString('id-ID')}
                       </td>
-                      <td style={{padding: '15px 10px', textAlign: 'center', textTransform: 'capitalize', fontSize: '13px'}}>
+                      <td style={{padding: '15px 10px', textAlign: 'center', textTransform: 'capitalize', fontSize: '11px', color: '#555'}}>
                         {trx.metode_pembayaran || "-"}
                       </td>
                       <td style={{padding: '15px 10px', textAlign: 'center'}}>
-                        <span className={`badge ${trx.status_pembayaran === 'lunas' ? 'badge-selesai' : 'badge-baru'}`}>
+                        {/* Font badge status disesuaikan ke 11px padat */}
+                        <span className={`badge ${trx.status_pembayaran === 'lunas' ? 'badge-selesai' : 'badge-baru'}`} style={{fontSize: '11px', padding: '4px 8px'}}>
                           {trx.status_pembayaran}
                         </span>
                       </td>
@@ -250,12 +253,12 @@ function Transaksi() {
                         {trx.status_pembayaran !== 'lunas' && isAksesKeuangan ? (
                           <button 
                             onClick={() => handleBukaModal(trx)}
-                            style={{background: '#3498db', color: 'white', border: 'none', padding: '6px 12px', borderRadius: '6px', cursor: 'pointer', fontSize: '12px', fontWeight: '600'}}
+                            style={{background: '#3498db', color: 'white', border: 'none', padding: '5px 10px', borderRadius: '6px', cursor: 'pointer', fontSize: '11px', fontWeight: '600'}}
                           >
-                            Konfirmasi Bayar
+                            Konfirmasi
                           </button>
                         ) : (
-                          <span style={{fontSize: '12px', color: '#999'}}>-</span>
+                          <span style={{fontSize: '11px', color: '#999'}}>-</span>
                         )}
                       </td>
                     </tr>
@@ -289,11 +292,11 @@ function Transaksi() {
             className="modal-box" 
             onClick={(e) => e.stopPropagation()}
             style={{
-              background: '#e3f2fd', /* Latar belakang biru muda lembut */
+              background: '#e3f2fd', 
               padding: '30px 35px', 
               width: '100%',
-              maxWidth: '460px', /* Ramping dan serasi */
-              borderRadius: '24px', /* Sudut melengkung bulat */
+              maxWidth: '460px', 
+              borderRadius: '24px', 
               boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
               boxSizing: 'border-box',
               display: 'flex',
@@ -308,7 +311,7 @@ function Transaksi() {
               Pesanan: <span style={{ color: '#1e293b' }}>#{selectedTrx.id_pesanan.substring(0,8).toUpperCase()}</span>
             </p>
 
-            {/* Input 1: Metode Pembayaran (Tanpa Box Hitam) */}
+            {/* Input 1: Metode Pembayaran */}
             <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', width: '100%' }}>
               <label style={{ textAlign: "left", fontSize: '14px', fontWeight: '600', color: '#334155', paddingLeft: '2px' }}>
                 Metode Pembayaran
@@ -329,7 +332,7 @@ function Transaksi() {
                     boxSizing: 'border-box',
                     boxShadow: '0 1px 2px rgba(0,0,0,0.05)',
                     color: '#334155',
-                    appearance: 'none', /* Menyingkirkan panah & box hitam browser */
+                    appearance: 'none', 
                     WebkitAppearance: 'none',
                     MozAppearance: 'none',
                     cursor: 'pointer'
@@ -341,7 +344,6 @@ function Transaksi() {
                   <option value="qris">QRIS</option>
                   <option value="gopay">GoPay</option>
                 </select>
-                {/* Custom Panah Ganti Ikon Hitam */}
                 <div style={{
                   position: 'absolute', right: '15px', top: '50%', transform: 'translateY(-50%)',
                   pointerEvents: 'none', color: '#64748b', fontSize: '11px', fontWeight: 'bold'
@@ -351,13 +353,12 @@ function Transaksi() {
               </div>
             </div>
 
-            {/* Input 2: Jumlah Dibayar (Tanpa Panah Naik Turun Hitam) */}
+            {/* Input 2: Jumlah Dibayar */}
             <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', width: '100%' }}>
               <label style={{ textAlign: "left", fontSize: '14px', fontWeight: '600', color: '#334155', paddingLeft: '2px' }}>
                 Jumlah Dibayar (Rp)
               </label>
               
-              {/* Menyisipkan injector CSS inline untuk melumpuhkan spinner/panah input number di Chrome/Firefox */}
               <style>{`
                 input::-webkit-outer-spin-button,
                 input::-webkit-inner-spin-button {
@@ -393,7 +394,7 @@ function Transaksi() {
               </small>
             </div>
 
-            {/* Tombol Aksi Kapsul Merah Muda dan Hijau Cerah */}
+            {/* Tombol Aksi */}
             <div className="modal-actions" style={{ display: 'flex', gap: '15px', justifyContent: 'center', marginTop: '10px' }}>
               <button 
                 type="button"
