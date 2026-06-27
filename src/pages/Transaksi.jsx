@@ -53,7 +53,6 @@ function Transaksi() {
         } catch (e) {}
       }
 
-     
       const endpoint = (isDokter && idDokter) 
         ? `/api/transaksi/dokter/${idDokter}` 
         : `/api/transaksi`;
@@ -149,7 +148,6 @@ function Transaksi() {
         
         <Topbar title="Transaksi" />
 
-
         <div className="transaksi-filter" style={{display: 'flex', gap: '15px', marginBottom: '20px', alignItems: 'center'}}>
           <input
             type="text"
@@ -180,7 +178,6 @@ function Transaksi() {
               gap: '8px' 
             }}
           >
-           
             <svg 
               width="18" 
               height="18" 
@@ -271,51 +268,159 @@ function Transaksi() {
       </div>
 
       {showModal && selectedTrx && (
-        <div className="modal-overlay">
-          <div className="modal-box" style={{background: 'white', padding: '30px', borderRadius: '16px', boxShadow: '0 10px 25px rgba(0,0,0,0.05)', border: '1px solid #e2e8f0', maxWidth: '400px'}}>
-            <h3 style={{ color: '#1a5694', marginBottom: '10px', textAlign: 'center' }}>Konfirmasi Pembayaran</h3>
-            <p style={{ fontSize: 13, color: "#666", marginBottom: 20, textAlign: 'center' }}>
-              Pesanan: <strong>#{selectedTrx.id_pesanan.substring(0,8).toUpperCase()}</strong>
+        <div 
+          className="modal-overlay"
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            width: '100vw',
+            height: '100vh',
+            backgroundColor: 'rgba(30, 41, 59, 0.45)',
+            backdropFilter: 'blur(4px)',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            zIndex: 9999,
+          }}
+          onClick={handleTutupModal}
+        >
+          <div 
+            className="modal-box" 
+            onClick={(e) => e.stopPropagation()}
+            style={{
+              background: '#e3f2fd', /* Latar belakang biru muda lembut */
+              padding: '30px 35px', 
+              width: '100%',
+              maxWidth: '460px', /* Ramping dan serasi */
+              borderRadius: '24px', /* Sudut melengkung bulat */
+              boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
+              boxSizing: 'border-box',
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '16px'
+            }}
+          >
+            <h3 style={{ margin: '0', fontSize: '20px', fontWeight: '700', color: '#1e293b', textAlign: 'center' }}>
+              Konfirmasi Pembayaran
+            </h3>
+            <p style={{ margin: '-10px 0 5px 0', fontSize: '14px', color: '#64748b', textAlign: 'center', fontWeight: '600' }}>
+              Pesanan: <span style={{ color: '#1e293b' }}>#{selectedTrx.id_pesanan.substring(0,8).toUpperCase()}</span>
             </p>
 
-            <div style={{ marginBottom: '15px', textAlign: 'left' }}>
-              <label style={{ display: 'block', marginBottom: '5px', fontSize: '13px', fontWeight: '600', color: '#4a5568' }}>Metode Pembayaran</label>
-              <select
-                className="modal-select"
-                value={metode}
-                onChange={(e) => setMetode(e.target.value)}
-                style={{width: '100%', padding: '12px', border: '1px solid #cbd5e1', borderRadius: '10px', background: '#f8fafc', outline: 'none'}}
-              >
-                <option value="" disabled>-- Pilih Metode --</option>
-                <option value="transfer">Transfer Bank</option>
-                <option value="tunai">Tunai</option>
-                <option value="qris">QRIS</option>
-                <option value="gopay">GoPay</option>
-              </select>
+            {/* Input 1: Metode Pembayaran (Tanpa Box Hitam) */}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', width: '100%' }}>
+              <label style={{ textAlign: "left", fontSize: '14px', fontWeight: '600', color: '#334155', paddingLeft: '2px' }}>
+                Metode Pembayaran
+              </label>
+              <div style={{ position: 'relative', width: '100%' }}>
+                <select
+                  value={metode}
+                  onChange={(e) => setMetode(e.target.value)}
+                  style={{ 
+                    width: '100%', 
+                    padding: '10px 14px', 
+                    border: '1px solid #cbd5e1', 
+                    borderRadius: '12px', 
+                    outline: 'none', 
+                    background: '#ffffff', 
+                    fontFamily: 'inherit', 
+                    fontSize: '14px', 
+                    boxSizing: 'border-box',
+                    boxShadow: '0 1px 2px rgba(0,0,0,0.05)',
+                    color: '#334155',
+                    appearance: 'none', /* Menyingkirkan panah & box hitam browser */
+                    WebkitAppearance: 'none',
+                    MozAppearance: 'none',
+                    cursor: 'pointer'
+                  }}
+                >
+                  <option value="" disabled>-- Pilih Metode --</option>
+                  <option value="transfer">Transfer Bank</option>
+                  <option value="tunai">Tunai</option>
+                  <option value="qris">QRIS</option>
+                  <option value="gopay">GoPay</option>
+                </select>
+                {/* Custom Panah Ganti Ikon Hitam */}
+                <div style={{
+                  position: 'absolute', right: '15px', top: '50%', transform: 'translateY(-50%)',
+                  pointerEvents: 'none', color: '#64748b', fontSize: '11px', fontWeight: 'bold'
+                }}>
+                  ▲▼
+                </div>
+              </div>
             </div>
 
-            <div style={{ marginBottom: '20px', textAlign: 'left' }}>
-              <label style={{ display: 'block', marginBottom: '5px', fontSize: '13px', fontWeight: '600', color: '#4a5568' }}>Jumlah Dibayar (Rp)</label>
+            {/* Input 2: Jumlah Dibayar (Tanpa Panah Naik Turun Hitam) */}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', width: '100%' }}>
+              <label style={{ textAlign: "left", fontSize: '14px', fontWeight: '600', color: '#334155', paddingLeft: '2px' }}>
+                Jumlah Dibayar (Rp)
+              </label>
+              
+              {/* Menyisipkan injector CSS inline untuk melumpuhkan spinner/panah input number di Chrome/Firefox */}
+              <style>{`
+                input::-webkit-outer-spin-button,
+                input::-webkit-inner-spin-button {
+                  -webkit-appearance: none;
+                  margin: 0;
+                }
+                input[type=number] {
+                  -moz-appearance: textfield;
+                }
+              `}</style>
+
               <input
                 type="number"
-                className="modal-select" 
+                placeholder="Masukkan jumlah pembayaran"
                 value={jumlahDibayar}
                 onChange={(e) => setJumlahDibayar(e.target.value)}
-                style={{width: '100%', padding: '12px', border: '1px solid #cbd5e1', borderRadius: '10px', background: '#f8fafc', outline: 'none'}}
+                style={{ 
+                  width: '100%', 
+                  padding: '10px 14px', 
+                  border: '1px solid #cbd5e1', 
+                  borderRadius: '12px', 
+                  outline: 'none', 
+                  background: '#ffffff', 
+                  fontFamily: 'inherit', 
+                  fontSize: '14px', 
+                  boxSizing: 'border-box',
+                  boxShadow: '0 1px 2px rgba(0,0,0,0.05)',
+                  color: '#334155'
+                }}
               />
-              <small style={{ color: '#e74c3c', fontSize: '11px', marginTop: '5px', display: 'block' }}>
+              <small style={{ color: '#ef4444', fontSize: '13px', margin: '4px 0 0 2px', textAlign: 'left', fontWeight: '500' }}>
                 *Total tagihan: Rp {Number(selectedTrx.total_harga).toLocaleString('id-ID')}
               </small>
             </div>
 
-            <div className="modal-actions" style={{display: 'flex', gap: '12px'}}>
-              <button className="btn-reject" style={{flex: 1, padding: '12px', background: '#f1f5f9', color: '#475569', border: 'none', borderRadius: '10px', fontWeight: '600', cursor: 'pointer'}} onClick={handleTutupModal} disabled={submitting}>
+            {/* Tombol Aksi Kapsul Merah Muda dan Hijau Cerah */}
+            <div className="modal-actions" style={{ display: 'flex', gap: '15px', justifyContent: 'center', marginTop: '10px' }}>
+              <button 
+                type="button"
+                onClick={handleTutupModal} 
+                disabled={submitting}
+                style={{ 
+                  background: '#ff5c75', color: 'white', padding: '10px 28px', border: 'none', 
+                  borderRadius: '25px', cursor: 'pointer', fontWeight: '700', fontSize: '14px', 
+                  minWidth: '110px', boxShadow: '0 2px 4px rgba(255,92,117,0.2)' 
+                }}
+              >
                 Batal
               </button>
-              <button className="btn-approve" style={{flex: 1, padding: '12px', background: '#0C96E4', color: 'white', border: 'none', borderRadius: '10px', fontWeight: '600', cursor: 'pointer'}} onClick={handleKonfirmasi} disabled={submitting}>
-                {submitting ? "Memproses..." : "Lunas"}
+              <button 
+                type="button"
+                onClick={handleKonfirmasi} 
+                disabled={submitting}
+                style={{ 
+                  background: '#00e640', color: 'white', padding: '10px 28px', border: 'none', 
+                  borderRadius: '25px', cursor: 'pointer', fontWeight: '700', fontSize: '14px', 
+                  minWidth: '110px', boxShadow: '0 2px 4px rgba(0,230,64,0.2)' 
+                }}
+              >
+                {submitting ? "Proses..." : "Lunas"}
               </button>
             </div>
+
           </div>
         </div>
       )}

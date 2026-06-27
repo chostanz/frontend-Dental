@@ -212,53 +212,144 @@ function Pengiriman() {
 
       </div>
 
-    
+      {/* ─── MODAL DENGAN UKURAN UKURAN INPUT RAMPING & SERASI ─── */}
       {showModal && (
-        <div className="modal-overlay" onClick={() => setShowModal(false)}>
-          <div className="modal-box" onClick={(e) => e.stopPropagation()}>
-            <h3>Tambah Pengiriman</h3>
-            <p className="modal-sub">Hanya pesanan yang sudah selesai diproduksi yang bisa dikirim.</p>
+        <div 
+          className="modal-overlay" 
+          onClick={() => setShowModal(false)}
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            width: '100vw',
+            height: '100vh',
+            backgroundColor: 'rgba(30, 41, 59, 0.45)',
+            backdropFilter: 'blur(4px)',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            zIndex: 9999,
+          }}
+        >
+          <div 
+            className="modal-box" 
+            onClick={(e) => e.stopPropagation()}
+            style={{
+              background: '#e3f2fd', 
+              padding: '30px 35px', 
+              width: '100%',
+              maxWidth: '460px', /* Dibuat sedikit lebih compact agar pas di mata */
+              borderRadius: '24px', 
+              boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
+              boxSizing: 'border-box',
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '16px'
+            }}
+          >
+            <h3 style={{ margin: '0', fontSize: '20px', fontWeight: '700', color: '#1e293b', textAlign: 'center' }}>
+              Tambah Pengiriman
+            </h3>
+            <p className="modal-sub" style={{ margin: '-10px 0 5px 0', fontSize: '13px', color: '#64748b', textAlign: 'center', lineHeight: '1.4' }}>
+              Hanya pesanan yang sudah selesai diproduksi yang bisa dikirim.
+            </p>
 
-           
-            <label style={{ textAlign: "left", display: "block", width: "100%" }}>Pesanan</label>
-            <select
-              value={form.id_pesanan}
-              onChange={(e) => setForm({ ...form, id_pesanan: e.target.value })}
-            >
-              <option value="">-- Pilih Pesanan --</option>
-              {siapKirimList.map((p) => (
-                <option key={p.id_pesanan} value={p.id_pesanan}>
-                  {p.id_pesanan.slice(0, 8)}...
-                </option>
-              ))}
-            </select>
+            {/* Input 1: Pilih Pesanan */}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', width: '100%' }}>
+              <label style={{ textAlign: "left", fontSize: '14px', fontWeight: '600', color: '#334155', paddingLeft: '2px' }}>Pesanan</label>
+              <select
+                value={form.id_pesanan}
+                onChange={(e) => setForm({ ...form, id_pesanan: e.target.value })}
+                style={{ 
+                  width: '100%', 
+                  padding: '10px 14px', /* Mengecilkan ukuran vertikal input */
+                  border: '1px solid #cbd5e1', 
+                  borderRadius: '12px', 
+                  outline: 'none', 
+                  background: '#ffffff', 
+                  fontFamily: 'inherit', 
+                  fontSize: '14px', 
+                  boxSizing: 'border-box',
+                  boxShadow: '0 1px 2px rgba(0,0,0,0.05)'
+                }}
+              >
+                <option value="">-- Pilih Pesanan --</option>
+                {siapKirimList.map((p) => (
+                  <option key={p.id_pesanan} value={p.id_pesanan}>
+                    {p.id_pesanan.slice(0, 8)}...
+                  </option>
+                ))}
+              </select>
+            </div>
 
-         
-            <label style={{ textAlign: "left", display: "block", width: "100%" }}>Jasa Kurir</label>
-            <select
-              value={form.nama_jasa}
-              onChange={(e) => setForm({ ...form, nama_jasa: e.target.value })}
-            >
-              <option value="">-- Pilih Kurir --</option>
-              {["JNE", "J&T", "SiCepat", "Anteraja", "Gosend", "Grab Express"].map((j) => (
-                <option key={j} value={j}>{j}</option>
-              ))}
-            </select>
+            {/* Input 2: Jasa Kurir */}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', width: '100%' }}>
+              <label style={{ textAlign: "left", fontSize: '14px', fontWeight: '600', color: '#334155', paddingLeft: '2px' }}>Jasa Kurir</label>
+              <select
+                value={form.nama_jasa}
+                onChange={(e) => setForm({ ...form, nama_jasa: e.target.value })}
+                style={{ 
+                  width: '100%', 
+                  padding: '10px 14px', /* Mengecilkan ukuran vertikal input */
+                  border: '1px solid #cbd5e1', 
+                  borderRadius: '12px', 
+                  outline: 'none', 
+                  background: '#ffffff', 
+                  fontFamily: 'inherit', 
+                  fontSize: '14px', 
+                  boxSizing: 'border-box',
+                  boxShadow: '0 1px 2px rgba(0,0,0,0.05)'
+                }}
+              >
+                <option value="">-- Pilih Kurir --</option>
+                {["JNE", "J&T", "SiCepat", "Anteraja", "Gosend", "Grab Express"].map((j) => (
+                  <option key={j} value={j}>{j}</option>
+                ))}
+              </select>
+            </div>
 
-           
-            <label style={{ textAlign: "left", display: "block", width: "100%" }}>No. Resi</label>
-            <input
-              type="text"
-              placeholder="Masukkan nomor resi"
-              value={form.no_resi}
-              onChange={(e) => setForm({ ...form, no_resi: e.target.value })}
-            />
+            {/* Input 3: No Resi */}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', width: '100%' }}>
+              <label style={{ textAlign: "left", fontSize: '14px', fontWeight: '600', color: '#334155', paddingLeft: '2px' }}>No. Resi</label>
+              <input
+                type="text"
+                placeholder="Masukkan nomor resi"
+                value={form.no_resi}
+                onChange={(e) => setForm({ ...form, no_resi: e.target.value })}
+                style={{ 
+                  width: '100%', 
+                  padding: '10px 14px', /* Mengecilkan ukuran vertikal input */
+                  border: '1px solid #cbd5e1', 
+                  borderRadius: '12px', 
+                  outline: 'none', 
+                  background: '#ffffff', 
+                  fontFamily: 'inherit', 
+                  fontSize: '14px', 
+                  boxSizing: 'border-box',
+                  boxShadow: '0 1px 2px rgba(0,0,0,0.05)'
+                }}
+              />
+            </div>
 
-            {formError && <p className="form-error">{formError}</p>}
+            {formError && <p className="form-error" style={{ color: '#ef4444', fontSize: '13px', margin: '0', textAlign: 'left', fontWeight: '500' }}>{formError}</p>}
 
-            <div className="modal-actions">
-              <button className="btn-cancel" onClick={() => setShowModal(false)}>Batal</button>
-              <button className="btn-submit" onClick={handleSubmit} disabled={submitting}>
+            {/* Tombol Kapsul Bulat Merah dan Hijau */}
+            <div className="modal-actions" style={{ display: 'flex', gap: '15px', justifyContent: 'center', marginTop: '10px' }}>
+              <button 
+                type="button"
+                className="btn-cancel" 
+                onClick={() => setShowModal(false)}
+                style={{ background: '#ff5c75', color: 'white', padding: '10px 28px', border: 'none', borderRadius: '25px', cursor: 'pointer', fontWeight: '700', fontSize: '14px', minWidth: '110px', boxShadow: '0 2px 4px rgba(255,92,117,0.2)' }}
+              >
+                Batal
+              </button>
+              <button 
+                type="button"
+                className="btn-submit" 
+                onClick={handleSubmit} 
+                disabled={submitting}
+                style={{ background: '#00e640', color: 'white', padding: '10px 28px', border: 'none', borderRadius: '25px', cursor: 'pointer', fontWeight: '700', fontSize: '14px', minWidth: '110px', boxShadow: '0 2px 4px rgba(0,230,64,0.2)' }}
+              >
                 {submitting ? "Menyimpan..." : "Simpan"}
               </button>
             </div>

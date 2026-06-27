@@ -7,7 +7,6 @@ import "../style/Karyawan.css";
 
 const ROLE_LABEL = { cs: 'CS', teknisi: 'Teknisi', bos: 'Bos' };
 
-
 const roleBadgeStyle = (role) => {
   const map = {
     cs:      { background: '#dbeafe', color: '#1d4ed8' },
@@ -50,7 +49,6 @@ function ModalTambah({ onClose, onSuccess }) {
     }
   };
 
-  
   if (tempPass) {
     return (
       <div className="modal-overlay">
@@ -120,6 +118,7 @@ function ModalTambah({ onClose, onSuccess }) {
   );
 }
 
+/* ─── Modal Edit Karyawan (Sudah Diubah ke Biru Muda) ─── */
 function ModalEdit({ karyawan, onClose, onSuccess }) {
   const [form, setForm] = useState({
     nama: karyawan.nama || '',
@@ -146,7 +145,7 @@ function ModalEdit({ karyawan, onClose, onSuccess }) {
 
   return (
     <div className="modal-overlay">
-      <div className="modal-box" style={{ maxWidth: '400px' }}>
+      <div className="modal-box" style={{ maxWidth: '400px', background: '#D7F0FF' }}>
         <h3>Edit Karyawan</h3>
         <div style={{ marginTop: '15px' }}>
           {error && (
@@ -320,7 +319,6 @@ function Karyawan() {
 
   useEffect(() => { fetchKaryawan(); }, []);
 
- 
   useEffect(() => {
     let result = [...karyawanList];
     if (filterRole !== 'semua') result = result.filter(k => k.role === filterRole);
@@ -341,7 +339,6 @@ function Karyawan() {
         
         <Topbar title="Manajemen Karyawan" />
 
-      
         <div className="filter-bar" style={{ display: 'flex', gap: '14px', marginBottom: '20px', alignItems: 'center' }}>
           
           <div className="filter-search" style={{ background: 'white', padding: '0 18px', borderRadius: '12px', boxShadow: '0 2px 8px rgba(0,0,0,0.06)', flex: 1, display: 'flex', alignItems: 'center', height: '46px' }}>
@@ -354,7 +351,6 @@ function Karyawan() {
             />
           </div>
 
-     
           <div className="filter-select">
             <select 
               className="custom-select-role"
@@ -369,7 +365,6 @@ function Karyawan() {
             </select>
           </div>
 
-        
           <button
             className="btn-tambah"
             style={{ 
@@ -463,7 +458,6 @@ function Karyawan() {
         </div>
       </div>
 
-     
       {modalTambah && (
         <ModalTambah
           onClose={() => setModalTambah(false)}

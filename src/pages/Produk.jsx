@@ -80,9 +80,10 @@ const KatalogProduk = () => {
     <div className="dashboard-container">
       <div className="main-content">
         
-          <Topbar title="Produk" />
-          {isAdmin && !showForm && (
-           <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '20px' }}>
+        <Topbar title="Produk" />
+        
+        {isAdmin && !showForm && (
+          <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '20px' }}>
             <button 
               className="btn" 
               onClick={() => { 
@@ -90,41 +91,101 @@ const KatalogProduk = () => {
                 setIsEditing(false); 
                 setFormData({ id_produk: '', nama_bahan: '', spesifikasi: '', harga: '' }); 
               }} 
-              style={{ width: 'auto', padding: '12px 20px', background: '#3498db', color: 'white', border: 'none', borderRadius: '10px', cursor: 'pointer', fontWeight: 'bold' }}
+              style={{ width: 'auto', padding: '12px 20px', background: '#3498db', color: 'white', border: 'none', borderRadius: '10px', cursor: 'pointer', fontWeight: '600' }}
             >
               + Tambah Produk Baru
             </button>
           </div>
-          )}
+        )}
 
-      
+        {/* ─── DESAIN FORM (TAMBAH & EDIT SAMA PERSIS - MAX WIDTH 700PX DI TENGAH) ─── */}
         {showForm && isAdmin && (
-          <div className="register-box" style={{ padding: '30px', margin: '10px 0 25px', maxWidth: '1100px' }}>
-            <h3>{isEditing ? 'Edit Produk' : 'Tambah Produk Baru'}</h3><br/>
-            <form onSubmit={handleSubmit} className="form-register">
-              <div className="input-group">
-                <label>Nama Bahan / Produk</label>
-                <input type="text" name="nama_bahan" value={formData.nama_bahan} onChange={handleChange} required />
+          <div style={{ 
+            background: '#d7f0ff', 
+            padding: '25px 30px', 
+            margin: '10px auto 25px auto', /* Otomatis ke tengah halaman */
+            maxWidth: '700px', /* Ukuran sedang ideal (tidak kebesaran/kekecilan) */
+            width: '100%',
+            borderRadius: '12px', 
+            boxShadow: '0 4px 14px rgba(0, 0, 0, 0.05)',
+            border: '1px solid #bce1f7',
+            boxSizing: 'border-box'
+          }}>
+            <h3 style={{ margin: '0 0 20px 0', fontSize: '17px', fontWeight: '700', color: '#1e293b', textAlign: 'left' }}>
+              {isEditing ? 'Edit Detail Produk' : 'Tambah Produk Baru'}
+            </h3>
+            
+            <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+              
+              {/* Input 1: Nama Produk */}
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', textAlign: 'left' }}>
+                <label style={{ fontSize: '13px', fontWeight: '600', color: '#334155' }}>Nama Bahan / Produk</label>
+                <input 
+                  type="text" 
+                  name="nama_bahan" 
+                  value={formData.nama_bahan} 
+                  onChange={handleChange} 
+                  required 
+                  placeholder="Contoh: Crown PFM"
+                  style={{ padding: '12px 14px', border: '1px solid #cbd5e1', borderRadius: '8px', outline: 'none', background: '#ffffff', fontFamily: 'inherit', fontSize: '14px', width: '100%', boxSizing: 'border-box' }}
+                />
               </div>
-              <div className="input-group">
-                <label>Harga (Rp)</label>
-                <input type="number" name="harga" value={formData.harga} onChange={handleChange} required />
+              
+              {/* Input 2: Harga */}
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', textAlign: 'left' }}>
+                <label style={{ fontSize: '13px', fontWeight: '600', color: '#334155' }}>Harga (Rp)</label>
+                <input 
+                  type="number" 
+                  name="harga" 
+                  value={formData.harga} 
+                  onChange={handleChange} 
+                  required 
+                  placeholder="Contoh: 500000"
+                  style={{ padding: '12px 14px', border: '1px solid #cbd5e1', borderRadius: '8px', outline: 'none', background: '#ffffff', fontFamily: 'inherit', fontSize: '14px', width: '100%', boxSizing: 'border-box' }}
+                />
               </div>
-              <div className="input-group" style={{ gridColumn: 'span 2' }}>
-                <label>Spesifikasi Detail</label>
-                <textarea name="spesifikasi" value={formData.spesifikasi} onChange={handleChange} required rows="3"></textarea>
+
+              {/* Input 3: Spesifikasi */}
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', textAlign: 'left' }}>
+                <label style={{ fontSize: '13px', fontWeight: '600', color: '#334155' }}>Spesifikasi Detail</label>
+                <textarea 
+                  name="spesifikasi" 
+                  value={formData.spesifikasi} 
+                  onChange={handleChange} 
+                  required 
+                  rows="4" 
+                  placeholder="Masukkan detail atau spesifikasi bahan..."
+                  style={{ padding: '12px 14px', border: '1px solid #cbd5e1', borderRadius: '8px', outline: 'none', background: '#ffffff', fontFamily: 'inherit', fontSize: '14px', resize: 'vertical', width: '100%', boxSizing: 'border-box' }}
+                ></textarea>
               </div>
-              <div style={{ gridColumn: 'span 2', display: 'flex', gap: '15px', justifyContent: 'flex-end' }}>
-                <button type="submit" className="btn" style={{ background: '#3498db', width: '180px' }}>Simpan Produk</button>
-                <button type="button" className="btn" onClick={() => setShowForm(false)} style={{ background: '#e8e8e8', color: '#333', width: '120px' }}>Batal</button>
+
+              {/* Tombol Aksi Simpan & Batal */}
+              <div style={{ display: 'flex', gap: '12px', justifyContent: 'flex-end', marginTop: '10px' }}>
+                <button 
+                  type="button" 
+                  onClick={() => setShowForm(false)} 
+                  style={{ background: '#e2e8f0', color: '#334155', padding: '10px 22px', border: 'none', borderRadius: '8px', cursor: 'pointer', fontWeight: '600', fontSize: '14px' }}
+                >
+                  Batal
+                </button>
+                <button 
+                  type="submit" 
+                  style={{ background: '#3498db', color: 'white', padding: '10px 26px', border: 'none', borderRadius: '8px', cursor: 'pointer', fontWeight: '600', fontSize: '14px' }}
+                >
+                  Simpan Produk
+                </button>
               </div>
+
             </form>
           </div>
         )}
 
-      
         <div className="shipping-wrapper" style={{ marginTop: '10px' }}>
-          {loading ? <p style={{padding: '20px'}}>Memuat katalog...</p> : error ? <p style={{color: 'red', padding: '20px'}}>{error}</p> : (
+          {loading ? (
+            <p style={{padding: '20px'}}>Memuat katalog...</p>
+          ) : error ? (
+            <p style={{color: 'red', padding: '20px'}}>{error}</p>
+          ) : (
             <table className="shipping-table" style={{ width: '100%', borderCollapse: 'collapse' }}>
               <thead>
                 <tr>
@@ -137,26 +198,31 @@ const KatalogProduk = () => {
               <tbody>
                 {produk.map((item) => (
                   <tr key={item.id_produk}>
-                  
                     <td style={{ fontWeight: '600', color: '#222', textAlign: 'left', paddingLeft: '20px' }}>
                       {item.nama_bahan}
                     </td>
-                    
-                 
                     <td style={{ textAlign: 'left', paddingLeft: '20px', color: '#555' }}>
                       {item.spesifikasi}
                     </td>
-                    
-                 
                     <td style={{ color: '#3498db', fontWeight: '700', textAlign: 'center' }}>
                       Rp {Number(item.harga).toLocaleString('id-ID')}
                     </td>
-                    
-                  
                     {isAdmin && (
                       <td style={{ textAlign: 'center', whiteSpace: 'nowrap' }}>
-                        <button onClick={() => handleEditClick(item)} className="btn-approve" style={{ background: '#f6f34c', color: '#222', padding: '6px 16px', display: 'inline-block', marginRight: '8px' }}>Edit</button>
-                        <button onClick={() => handleDelete(item.id_produk)} className="btn-reject" style={{ background: '#ff7f88', padding: '6px 16px', display: 'inline-block' }}>Hapus</button>
+                        <button 
+                          onClick={() => handleEditClick(item)} 
+                          className="btn-approve" 
+                          style={{ background: '#dbeafe', color: '#1d4ed8', padding: '6px 16px', display: 'inline-block', marginRight: '8px', border: 'none', borderRadius: '6px', fontWeight: '600', cursor: 'pointer' }}
+                        >
+                          Edit
+                        </button>
+                        <button 
+                          onClick={() => handleDelete(item.id_produk)} 
+                          className="btn-reject" 
+                          style={{ background: '#fee2e2', color: '#991b1b', padding: '6px 16px', display: 'inline-block', border: 'none', borderRadius: '6px', fontWeight: '600', cursor: 'pointer' }}
+                        >
+                          Hapus
+                        </button>
                       </td>
                     )}
                   </tr>
