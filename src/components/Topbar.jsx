@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import apiClient from '../config/axiosConfig'; 
 import "../style/style.css"; 
+import FotoProfil from "../assets/pfp.png";
 
 // 🌟 Tambahkan props role ('karyawan' atau 'dokter')
 const Topbar = ({ title, showBackButton, role = 'karyawan' }) => {
@@ -58,7 +59,7 @@ const Topbar = ({ title, showBackButton, role = 'karyawan' }) => {
           borderRadius: '50%' /* Membuat gambar profil membulat estetik */
         }} 
         onClick={() => navigate("/profil")} // 🌟 Aksi navigasi dipindahkan ke sini
-        onError={(e) => { e.target.src = "/assets/pfp.png" }} 
+        onError={(e) => { e.target.src = {FotoProfil} }} 
       />
         </div>
       </div>

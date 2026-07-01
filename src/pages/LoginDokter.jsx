@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import apiClient from "../config/axiosConfig";
 import "../style/style.css";
+import fixLogo from "../assets/fix.png";
 
 function LoginDokter() {
   const [email, setEmail] = useState("");
@@ -55,7 +56,7 @@ function LoginDokter() {
     <div className="login-container">
       <div className="left-panel">
         <div className="logo-section">
-          <img src="/src/assets/fix.png" alt="Logo Dental" />
+          <img src={fixLogo} alt="Logo Dental" />
           <h1>DENTAL</h1>
           <h2>SISTEM KLINIK</h2>
           <p>Portal Khusus Mitra Dokter</p>

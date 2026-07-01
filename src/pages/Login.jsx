@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
 import apiClient from "../config/axiosConfig";
 import "../style/style.css";
+import fixLogo from "../assets/fix.png";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -58,7 +59,7 @@ function Login() {
     <div className="login-container">
       <div className="left-panel">
         <div className="logo-section">
-          <img src="/src/assets/fix.png" alt="Logo Dental" />
+          <img src={fixLogo} alt="Logo Dental" />
           <h1>DENTAL</h1>
           <h2>MANAGEMENT SYSTEM</h2>
           <p>Silakan Masuk Untuk Melanjutkan Ke Sistem</p>

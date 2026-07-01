@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import "../style/style.css"; 
+import fixLogo from "../assets/fix.png";
 
 const Sidebar = () => {
   const navigate = useNavigate();
@@ -26,7 +27,7 @@ const Sidebar = () => {
     <div className="sidebar">
       <div className="sidebar-logo">
         <img 
-          src="/src/assets/fix.png" 
+          src={fixLogo} 
           alt="Logo" 
           style={{ width: '100%', maxWidth: '45px', height: 'auto', objectFit: 'contain' }} 
           onError={(e) => { e.target.src = "/src/assets/fix.png" }} 
