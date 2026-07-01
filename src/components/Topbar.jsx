@@ -47,7 +47,7 @@ const Topbar = ({ title, showBackButton, role = 'karyawan' }) => {
         <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
           <span style={{ fontSize: '13px', color: '#676060', fontWeight: '500' }}>{userEmail}</span>
          <img 
-        src="/src/assets/pfp.png" 
+        src={FotoProfil}
         alt="Profil" 
         title="Ke Halaman Profil"
         style={{ 
