@@ -1,30 +1,31 @@
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:'Poppins',sans-serif;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-body{
-    background:#f5f5f5;
+body {
+  width: 100%;
+  min-height: 100vh;
 }
 
-
-/* aku ubah */
-/* 1. Perbaikan elemen input dan select agar teks terbaca jelas (Hitam) */
+#root {
+  width: 100%;
+  min-height: 100vh;
+}
 .input-group input,
 .input-group textarea,
 .input-group select,
 .filter-search input,
 .filter-select select {
-   color: #222222 !important; /* Paksa teks selalu hitam legam */
+   color: #222222 !important; 
     background-color: #ffffff !important;
     border: 1px solid #cccccc;
     font-family: 'Poppins', sans-serif;
 }
 
 select {
-    appearance: auto; /* Mengembalikan panah dropdown standar */
+    appearance: auto; 
     border: 1px solid #cbd5e1;
     padding: 10px 14px;
     border-radius: 8px;
@@ -40,29 +41,25 @@ label, h1, h2, h3, h4, p, span {
     color: #222222;
 }
 
-/* Memperbaiki warna teks dropdown/select pada form */
 .input-group select option {
     color: #222222;
     background: #ffffff;
 }
 
-/* 2. Menghilangkan garis bawah / underline pada tombol, link, dan aksi tabel */
 a, 
 .aksi-link,
 .shipping-table a,
 .btn-approve,
 .btn-reject {
-    text-decoration: none !important; /* Menghilangkan garis bawah secara mutlak */
+    text-decoration: none !important;
 }
 
-/* 3. Perbaikan kontras teks pada form register / input agar tidak bias */
 .register-box h3,
 .register-box label,
 .input-group label {
     color: #222222 !important;
 }
 
-/* 4. Menyesuaikan warna placeholder agar terlihat jelas */
 ::placeholder {
     color: #999999;
     opacity: 1;
@@ -149,6 +146,7 @@ a,
     padding:14px;
     border:none;
     background:#ffffff;
+    color:#222222;
     border-radius:8px;
     box-shadow:0 3px 5px rgba(0,0,0,0.2);
 }
@@ -534,7 +532,6 @@ textarea{
 .badge-selesai { background: #dcfce7; color: #166534; }
 .badge-revisi  { background: #A89EF5; color: #fff; }
 
-/* ---- RIGHT COL ---- */
 .right-col {
   display: flex;
   flex-direction: column;
@@ -1083,4 +1080,15 @@ select,table,th,td,div{
     border-radius:20px;
     font-size:12px;
     font-weight:600;
+}
+
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 30px white inset, 0 0 0 1px #cbd5e1 !important;
+    -webkit-text-fill-color: #334155 !important;
+    transition: background-color 5000s ease-in-out 0s;
+    border-radius: 12px; 
 }
