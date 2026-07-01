@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import apiClient from "../config/axiosConfig";
 import { jwtDecode } from "jwt-decode";
-import "../style/pengiriman.css";
+import "../style/Pengiriman.css";
 import Topbar from "../components/Topbar";
 const API_BASE = "http://localhost:8080";
 
