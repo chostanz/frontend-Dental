@@ -73,7 +73,7 @@ function Register() {
   };
 
   return (
-    <div style={{ width: '100%', boxSizing: 'border-box', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', background: '#ffffff', minHeight: '100vh', padding: '40px 20px', fontFamily: 'Inter, sans-serif' }}>
+    <div style={{ width: '100%', boxSizing: 'border-box', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', background: 'rgb(195, 229, 252)', minHeight: '100vh', padding: '40px 20px', fontFamily: 'Inter, sans-serif' }}>
 
       <div style={{ textAlign: 'center', marginBottom: '25px', width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
         
