@@ -10,7 +10,6 @@ const apiClient = axios.create({
 
 apiClient.interceptors.request.use(
   (config) => {
-    // Ambil token dari penyimpanan browser (localStorage)
     const token = localStorage.getItem('token');
     
     // Jika token ada, tambahkan format "Bearer <token>" ke header
