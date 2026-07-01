@@ -1,8 +1,8 @@
 import axios from 'axios';
+const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8080';
 
-// 1. Buat instance dasar
 const apiClient = axios.create({
-  baseURL: 'http://localhost:8080',
+  baseURL: apiUrl,
   headers: {
     'Content-Type': 'application/json',
   },
