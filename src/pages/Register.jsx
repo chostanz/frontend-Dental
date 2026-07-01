@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import apiClient from "../config/axiosConfig"; 
 import "../style/style.css";
+import fixLogo from "../assets/fix.png";
 
 function Register() {
   const [formData, setFormData] = useState({
@@ -77,7 +78,7 @@ function Register() {
       <div style={{ textAlign: 'center', marginBottom: '25px', width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
         
         <img 
-          src="/src/assets/fix.png" 
+          src={fixLogo} 
           alt="Logo Dental" 
           style={{ 
             width: '85px', 
