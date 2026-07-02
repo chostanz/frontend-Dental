@@ -127,7 +127,7 @@ const KatalogProduk = () => {
                   onChange={handleChange} 
                   required 
                   placeholder="Contoh: Crown PFM"
-                  style={{ padding: '12px 14px', border: '1px solid #cbd5e1', borderRadius: '8px', outline: 'none', background: '#ffffff', fontFamily: 'inherit', fontSize: '14px', width: '100%', boxSizing: 'border-box' }}
+                  style={{ padding: '12px 14px', border: '1px solid #cbd5e1', borderRadius: '8px', outline: 'none', background: '#ffffff', fontFamily: 'inherit', fontSize: '14px', width: '100%', boxSizing: 'border-box', color:'black'}}
                 />
               </div>
               
@@ -141,7 +141,7 @@ const KatalogProduk = () => {
                   onChange={handleChange} 
                   required 
                   placeholder="Contoh: 500000"
-                  style={{ padding: '12px 14px', border: '1px solid #cbd5e1', borderRadius: '8px', outline: 'none', background: '#ffffff', fontFamily: 'inherit', fontSize: '14px', width: '100%', boxSizing: 'border-box' }}
+                  style={{ padding: '12px 14px', border: '1px solid #cbd5e1', borderRadius: '8px', outline: 'none', background: '#ffffff', fontFamily: 'inherit', fontSize: '14px', width: '100%', boxSizing: 'border-box', color:'black' }}
                 />
               </div>
 
@@ -155,7 +155,7 @@ const KatalogProduk = () => {
                   required 
                   rows="4" 
                   placeholder="Masukkan detail atau spesifikasi bahan..."
-                  style={{ padding: '12px 14px', border: '1px solid #cbd5e1', borderRadius: '8px', outline: 'none', background: '#ffffff', fontFamily: 'inherit', fontSize: '14px', resize: 'vertical', width: '100%', boxSizing: 'border-box' }}
+                  style={{ padding: '12px 14px', border: '1px solid #cbd5e1', borderRadius: '8px', outline: 'none', background: '#ffffff', fontFamily: 'inherit', fontSize: '14px', resize: 'vertical', width: '100%', boxSizing: 'border-box', color:'black' }}
                 ></textarea>
               </div>
 
