@@ -208,7 +208,7 @@ const renderCard = (item) => (
     
       {showModal && selectedItem && (
         <div className="modal-overlay">
-          <div className="modal-box">
+          <div className="modal-box" style={{ color: "black", background:"white" }}>
             <h3>Update Status Pengerjaan</h3>
             <p style={{ fontSize: 13, color: "#666", marginBottom: 12 }}>
               Pesanan #{selectedItem.id_pesanan.slice(0, 8)} — status saat ini:{" "}
