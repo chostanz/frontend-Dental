@@ -51,9 +51,9 @@ const KatalogProduk = () => {
       };
 
       if (isEditing) {
-        await apiClient.put(`/produk/edit/${formData.id_produk}`, { ...payload, id_produk: formData.id_produk });
+        await apiClient.put(`/produk/edit/${formData.id_produk}`,payload);
       } else {
-        await apiClient.post('/add/produk', payload);
+        await apiClient.post('/api/produk', payload);
       }
       
       setShowForm(false);
