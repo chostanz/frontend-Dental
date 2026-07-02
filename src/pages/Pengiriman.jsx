@@ -4,7 +4,6 @@ import apiClient from "../config/axiosConfig";
 import { jwtDecode } from "jwt-decode";
 import "../style/Pengiriman.css";
 import Topbar from "../components/Topbar";
-const API_BASE = "http://localhost:8080";
 
 function Pengiriman() {
   const navigate = useNavigate();
@@ -27,48 +26,43 @@ function Pengiriman() {
   const isCS = role === "cs" || role === "bos";
 
   const fetchPengiriman = async () => {
-    try {
-      setLoading(true);
-      
-      let isDokter = false;
-      let idDokter = null;
+  try {
+    setLoading(true);
 
-      if (token) {
-        try {
-          const decodedToken = jwtDecode(token);
-          if (decodedToken.id_dokter) {
-            isDokter = true;
-            idDokter = decodedToken.id_dokter;
-          }
-        } catch (e) {}
+    let isDokter = false;
+    let idDokter = null;
+
+    if (token) {
+      try {
+        const decodedToken = jwtDecode(token);
+        if (decodedToken.id_dokter) {
+          isDokter = true;
+          idDokter = decodedToken.id_dokter;
+        }
+      } catch (e) {
+        console.error(e);
       }
+    }
 
-      // Tentukan URL berdasarkan Role
-      const endpoint = (isDokter && idDokter) 
-        ? `/api/pengiriman/dokter/${idDokter}` 
+    // Tentukan endpoint berdasarkan role
+    const endpoint =
+      isDokter && idDokter
+        ? `/api/pengiriman/dokter/${idDokter}`
         : `/api/pengiriman`;
 
-      const res = await fetch(`${API_BASE}${endpoint}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      
-      if (!res.ok) throw new Error("Gagal mengambil data pengiriman");
-      const data = await res.json();
-      setPengirimanList(data.data || []);
-    } catch (err) {
-      setError(err.message);
-    } finally {
-      setLoading(false);
-    }
-  };
+    const res = await apiClient.get(endpoint);
+    setPengirimanList(res.data.data || []);
+  } catch (err) {
+    setError(err.response?.data?.message || err.message);
+  } finally {
+    setLoading(false);
+  }
+};
 
   const fetchSiapKirim = async () => {
     try {
-      const res = await fetch(`${API_BASE}/api/pengiriman/siap-kirim`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      const data = await res.json();
-      setSiapKirimList(data.data || []);
+      const res = await apiClient.get("/api/pengiriman/siap-kirim");
+      setSiapKirimList(res.data.data || []);
     } catch (_) {}
   };
 
@@ -83,32 +77,26 @@ function Pengiriman() {
     setShowModal(true);
   };
 
-  const handleSubmit = async () => {
-    if (!form.id_pesanan || !form.nama_jasa || !form.no_resi) {
-      setFormError("Semua field wajib diisi");
-      return;
-    }
-    setSubmitting(true);
-    setFormError(null);
-    try {
-      const res = await fetch(`${API_BASE}/api/pengiriman`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify(form),
-      });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.message || "Gagal menambah pengiriman");
-      setShowModal(false);
-      fetchPengiriman();
-    } catch (err) {
-      setFormError(err.message);
-    } finally {
-      setSubmitting(false);
-    }
-  };
+    const handleSubmit = async () => {
+      if (!form.id_pesanan || !form.nama_jasa || !form.no_resi) {
+        setFormError("Semua field wajib diisi");
+        return;
+      }
+
+      setSubmitting(true);
+      setFormError(null);
+
+      try {
+        await apiClient.post("/api/pengiriman", form);
+
+        setShowModal(false);
+        fetchPengiriman();
+      } catch (err) {
+        setFormError(err.response?.data?.message || err.message);
+      } finally {
+        setSubmitting(false);
+      }
+    };
 
   const statusColors = {
     Menunggu: "status-yellow",
