@@ -252,7 +252,7 @@ function Transaksi() {
                   </tr>
                 ) : (
                   filteredTransaksi.map((trx) => (
-                    <tr key={trx.id_transaksi} style={{borderBottom: '1px solid #f0f4f8'}}>
+                    <tr key={trx.id_transaksi}>
                       <td style={{padding: '15px 15px', fontWeight: '600', color: '#222', fontSize: '12px', whiteSpace: 'nowrap'}}>
                         #{trx.id_transaksi ? trx.id_transaksi.substring(0,8).toUpperCase() : "-"}
                       </td>

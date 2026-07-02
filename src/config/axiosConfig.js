@@ -1,5 +1,8 @@
 import axios from 'axios';
+import Swal from "sweetalert2";
 const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8080';
+
+let isRedirecting = false;
 
 const apiClient = axios.create({
   baseURL: apiUrl,
@@ -12,7 +15,6 @@ apiClient.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem('token');
     
-    // Jika token ada, tambahkan format "Bearer <token>" ke header
     if (token) {
       config.headers['Authorization'] = `Bearer ${token}`;
     }
@@ -24,17 +26,26 @@ apiClient.interceptors.request.use(
   }
 );
 
-// 3. (Opsional) Tambahkan Interceptor untuk Response
 apiClient.interceptors.response.use(
   (response) => response,
-  (error) => {
-    // Tangani jika token expired / unauthorized dari backend
-    if (error.response && error.response.status === 401) {
-      console.warn("Token expired atau tidak valid. Silakan login kembali.");
-      // Anda bisa menambahkan logika otomatis logout / hapus token di sini
-      // localStorage.removeItem('token');
-      // window.location.href = '/login'; 
+  async (error) => {
+
+    if (error.response?.status === 401 && !isRedirecting) {
+
+      isRedirecting = true;
+
+      localStorage.removeItem("token");
+
+      await Swal.fire({
+        icon: "warning",
+        title: "Sesi telah berakhir",
+        text: "Silakan login kembali.",
+        confirmButtonText: "OK",
+      });
+
+      window.location.href = "/login";
     }
+
     return Promise.reject(error);
   }
 );
